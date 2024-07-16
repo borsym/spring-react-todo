@@ -3,11 +3,9 @@ package com.todo.Todo_app.api.controller.auth;
 import com.todo.Todo_app.api.controller.model.LoginBody;
 import com.todo.Todo_app.api.controller.model.LoginResponse;
 import com.todo.Todo_app.api.controller.model.RegistrationBody;
-import com.todo.Todo_app.model.User;
+import com.todo.Todo_app.model.Users;
 import com.todo.Todo_app.service.UserService;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +43,7 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public User getLoggedInUserProfile(@AuthenticationPrincipal User user) {
+    public Users getLoggedInUserProfile(@AuthenticationPrincipal Users user) {
         return user;
     }
 }

@@ -2,7 +2,7 @@ package com.todo.Todo_app.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.todo.Todo_app.model.User;
+import com.todo.Todo_app.model.Users;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class JWTService {
         algorithm = Algorithm.HMAC256(algorithmKey);
     }
 
-    public String generateJWT(User user) {
+    public String generateJWT(Users user) {
         return JWT.create()
                 .withClaim(USERNAME_KEY, user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + (1000L * expiryInSeconds)))

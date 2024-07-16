@@ -3,7 +3,7 @@ package com.todo.Todo_app.service;
 import com.todo.Todo_app.api.controller.model.LoginBody;
 import com.todo.Todo_app.api.controller.model.RegistrationBody;
 import com.todo.Todo_app.exception.UserAlreadyExistsException;
-import com.todo.Todo_app.model.User;
+import com.todo.Todo_app.model.Users;
 import com.todo.Todo_app.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +25,12 @@ public class UserService {
     }
 
 
-    public User registerUser(RegistrationBody registrationBody) throws UserAlreadyExistsException {
+    public Users registerUser(RegistrationBody registrationBody) throws UserAlreadyExistsException {
         if(userRepository.findByEmail(registrationBody.getEmail()).isPresent()
                 || userRepository.findByUsername(registrationBody.getUsername()).isPresent()) {
             throw new UserAlreadyExistsException();
         }
-        User user = new User();
+        Users user = new Users();
         user.setEmail(registrationBody.getEmail());
         user.setUsername(registrationBody.getUsername());
         user.setPassword(encryptionService.encryptPassword(registrationBody.getPassword()));
@@ -39,10 +39,10 @@ public class UserService {
     }
 
     public String loginUser(LoginBody loginBody) {
-        Optional<User> optUser = userRepository.findByUsername(loginBody.getUsername());
+        Optional<Users> optUser = userRepository.findByUsername(loginBody.getUsername());
         if (optUser.isEmpty()) return null;
 
-        User user = optUser.get();
+        Users user = optUser.get();
         if (encryptionService.verifyPassword(loginBody.getPassword(), user.getPassword())) {
             return jwtService.generateJWT(user);
         }
