@@ -1,19 +1,29 @@
 package com.todo.Todo_app.service;
 
+import com.todo.Todo_app.api.controller.model.LoginBody;
 import com.todo.Todo_app.api.controller.model.RegistrationBody;
 import com.todo.Todo_app.exception.UserAlreadyExistsException;
 import com.todo.Todo_app.model.User;
 import com.todo.Todo_app.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
     private UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    private EncryptionService encryptionService;
+    private JWTService jwtService;
+
+
+    public UserService(UserRepository userRepository, EncryptionService encryptionService, JWTService jwtService) {
         this.userRepository = userRepository;
+        this.encryptionService = encryptionService;
+        this.jwtService = jwtService;
     }
+
 
     public User registerUser(RegistrationBody registrationBody) throws UserAlreadyExistsException {
         if(userRepository.findByEmail(registrationBody.getEmail()).isPresent()
@@ -23,9 +33,21 @@ public class UserService {
         User user = new User();
         user.setEmail(registrationBody.getEmail());
         user.setUsername(registrationBody.getUsername());
-        // hash
-        user.setPassword(registrationBody.getPassword());
+        user.setPassword(encryptionService.encryptPassword(registrationBody.getPassword()));
 
         return userRepository.save(user);
     }
+
+    public String loginUser(LoginBody loginBody) {
+        Optional<User> optUser = userRepository.findByUsername(loginBody.getUsername());
+        if (optUser.isEmpty()) return null;
+
+        User user = optUser.get();
+        if (encryptionService.verifyPassword(loginBody.getPassword(), user.getPassword())) {
+            return jwtService.generateJWT(user);
+        }
+
+        return null;
+    }
+
 }
