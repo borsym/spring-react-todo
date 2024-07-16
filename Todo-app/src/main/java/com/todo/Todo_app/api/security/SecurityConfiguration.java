@@ -24,7 +24,7 @@ public class SecurityConfiguration {
                 .cors(AbstractHttpConfigurer::disable);
         // We need to make sure our authentication filter is run before the http request filter is run.
         http.addFilterBefore(jwtRequestFilter, AuthorizationFilter.class);
-        http.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/register", "/auth/login")
+        http.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/register", "/auth/login", "/tasks")
                 .permitAll()
                 .anyRequest()
                 .authenticated());
