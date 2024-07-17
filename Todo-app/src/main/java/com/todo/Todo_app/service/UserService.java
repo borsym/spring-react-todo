@@ -7,6 +7,7 @@ import com.todo.Todo_app.model.Users;
 import com.todo.Todo_app.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -49,5 +50,14 @@ public class UserService {
 
         return null;
     }
+
+    public List<Users> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public Optional<Users> getUserById(Long id) {
+        return userRepository.findById(id);
+    }
+
 
 }
