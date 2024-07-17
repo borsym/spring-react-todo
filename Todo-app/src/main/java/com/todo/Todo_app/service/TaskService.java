@@ -5,6 +5,7 @@ import com.todo.Todo_app.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -16,5 +17,8 @@ public class TaskService {
 
     public List<Tasks> getAllTasks() {
         return taskRepository.findAll();
+    }
+    public Optional<Tasks> getTaskById(Long id) {
+        return taskRepository.findById(id);
     }
 }
