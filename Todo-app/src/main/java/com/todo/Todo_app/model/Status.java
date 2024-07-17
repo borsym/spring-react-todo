@@ -11,5 +11,6 @@ public class Status {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private String status;
+    @Column(name = "status_name")
+    private String statusName;
 }
