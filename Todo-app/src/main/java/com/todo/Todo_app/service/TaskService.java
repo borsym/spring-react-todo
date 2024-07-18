@@ -35,7 +35,7 @@ public class TaskService {
         return taskRepository.findById(id);
     }
 
-    public Tasks addTask(TaskDTO taskDTO) {
+    public Tasks createTask(TaskDTO taskDTO) {
         Tasks task = new Tasks();
         task.setTitle(taskDTO.getTitle());
         task.setDescription(taskDTO.getDescription());
@@ -67,8 +67,51 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
+    public Tasks updateTask(Long id, TaskDTO taskDTO) {
+
+        Tasks task = findOrThrow(taskRepository, id, "Tasks");
+
+        if (taskDTO.getTitle() != null) {
+            task.setTitle(taskDTO.getTitle());
+        }
+        if (taskDTO.getDescription() != null) {
+            task.setDescription(taskDTO.getDescription());
+        }
+
+        if (taskDTO.getProjectId() != null) {
+            Projects project = findOrThrow(projectRepository, taskDTO.getProjectId(), "Projects");
+            task.setProject(project);
+        }
+        if (taskDTO.getCreatedBy() != null) {
+            Users user = findOrThrow(userRepository, taskDTO.getCreatedBy(), "Users");
+            task.setCreatedBy(user);
+        }
+
+        if (taskDTO.getPriority() != null) {
+            Priorities priority = findOrThrow(priorityRepository, taskDTO.getPriority(), "Priorities");
+            task.setPriority(priority);
+        }
+
+        if (taskDTO.getAssignedTo() != null) {
+            Users assignedUser = findOrThrow(userRepository, taskDTO.getAssignedTo(), "Users");
+            task.setAssignedTo(assignedUser);
+        }
+
+        if (taskDTO.getStatus() != null) {
+            Status status = findOrThrow(statusRepository, taskDTO.getStatus(), "Status");
+            task.setStatus(status);
+        }
+
+        task.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        return taskRepository.save(task);
+
+
+    }
+
     public static <T, ID> T findOrThrow(JpaRepository<T, ID> repository, ID id, String entityName) {
         return repository.findById(id).orElseThrow(() ->
                 new RuntimeException(entityName + " with id " + id + " not found"));
     }
+
+
 }
