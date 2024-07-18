@@ -2,7 +2,10 @@ package com.todo.Todo_app.service;
 
 import com.todo.Todo_app.api.controller.model.LoginBody;
 import com.todo.Todo_app.api.controller.model.RegistrationBody;
+import com.todo.Todo_app.dto.TaskDTO;
 import com.todo.Todo_app.exception.UserAlreadyExistsException;
+import com.todo.Todo_app.model.Projects;
+import com.todo.Todo_app.model.Tasks;
 import com.todo.Todo_app.model.Users;
 import com.todo.Todo_app.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -58,6 +61,4 @@ public class UserService {
     public Optional<Users> getUserById(Long id) {
         return userRepository.findById(id);
     }
-
-
 }

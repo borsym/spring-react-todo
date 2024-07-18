@@ -14,7 +14,7 @@ public class Tasks {
     private String title;
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "project_id")
     private Projects project;
 

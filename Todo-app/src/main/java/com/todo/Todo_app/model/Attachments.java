@@ -9,6 +9,7 @@ public class Attachments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
+    //TODO uuid
     private Long id;
 
     @ManyToOne
@@ -21,6 +22,6 @@ public class Attachments {
     @ManyToOne
     @JoinColumn(name = "uploaded_by")
     private Users uploadedBy;
-
+    // TODO LocalDate
     private java.sql.Timestamp uploadedAt;
 }

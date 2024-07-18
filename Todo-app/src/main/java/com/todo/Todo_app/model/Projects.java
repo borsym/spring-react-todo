@@ -17,5 +17,4 @@ public class Projects {
     @ManyToOne
     @JoinColumn(name = "created_by")
     private Users createdBy;
-
 }
