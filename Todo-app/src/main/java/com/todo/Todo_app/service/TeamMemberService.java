@@ -4,29 +4,24 @@ import com.todo.Todo_app.dto.TeamMemberDTO;
 import com.todo.Todo_app.model.TeamMembers;
 import com.todo.Todo_app.model.Teams;
 import com.todo.Todo_app.model.Users;
-import com.todo.Todo_app.repository.TeamMembersRepository;
+import com.todo.Todo_app.repository.TeamMemberRepository;
 import com.todo.Todo_app.repository.TeamRepository;
 import com.todo.Todo_app.repository.UserRepository;
-import jakarta.servlet.ServletOutputStream;
 import jakarta.transaction.Transactional;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
 import static com.todo.Todo_app.utils.Utils.findOrThrow;
 
 @Service
-public class TeamMembersService {
-    private final TeamMembersRepository teamMembersRepository;
+public class TeamMemberService {
+    private final TeamMemberRepository teamMembersRepository;
     private final TeamRepository teamRepository;
     private final UserRepository userRepository;
 
 
-    public TeamMembersService(TeamMembersRepository teamMembersRepository, TeamRepository teamRepository, UserRepository userRepository) {
+    public TeamMemberService(TeamMemberRepository teamMembersRepository, TeamRepository teamRepository, UserRepository userRepository) {
         this.teamMembersRepository = teamMembersRepository;
         this.teamRepository = teamRepository;
         this.userRepository = userRepository;
@@ -55,8 +50,8 @@ public class TeamMembersService {
     public void deleteTeamMember(Long id, TeamMemberDTO teamMemberDTO) {
         Teams team = findOrThrow(teamRepository, id, "Teams");
         Users user = findOrThrow(userRepository, teamMemberDTO.getIdUser(), "Users");
-
-        TeamMembers teamMember = teamMembersRepository.findByTeamAndUser(team, user);
+        TeamMembers teamMember = teamMembersRepository.findByTeamAndUser(team, user)
+                .orElseThrow(() -> new RuntimeException("Team member not found"));
         System.out.println(teamMember);
         teamMembersRepository.delete(teamMember);
     }

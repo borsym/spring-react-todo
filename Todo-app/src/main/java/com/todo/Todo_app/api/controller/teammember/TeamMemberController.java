@@ -2,8 +2,7 @@ package com.todo.Todo_app.api.controller.teammember;
 
 import com.todo.Todo_app.dto.TeamMemberDTO;
 import com.todo.Todo_app.model.TeamMembers;
-import com.todo.Todo_app.model.Teams;
-import com.todo.Todo_app.service.TeamMembersService;
+import com.todo.Todo_app.service.TeamMemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +12,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/teams/members")
 public class TeamMemberController {
-    private final TeamMembersService teamMembersService;
+    private final TeamMemberService teamMembersService;
 
-    public TeamMemberController(TeamMembersService teamMembersService) {
+    public TeamMemberController(TeamMemberService teamMembersService) {
         this.teamMembersService = teamMembersService;
     }
 
