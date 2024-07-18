@@ -1,12 +1,14 @@
-package com.todo.Todo_app.api.controller.Task;
+package com.todo.Todo_app.api.controller.task;
 
 
 import com.todo.Todo_app.dto.TaskDTO;
 import com.todo.Todo_app.model.Tasks;
+import com.todo.Todo_app.model.Users;
 import com.todo.Todo_app.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,9 +35,9 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createTask(@Valid @RequestBody TaskDTO taskDTO) {
+    public ResponseEntity<?> createTask(@Valid @RequestBody TaskDTO taskDTO, @AuthenticationPrincipal Users user) {
         try {
-            Tasks newTask = taskService.createTask(taskDTO);
+            Tasks newTask = taskService.createTask(taskDTO, user);
             return ResponseEntity.ok(newTask);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while creating the task");
@@ -50,7 +52,16 @@ public class TaskController {
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating the task");
         }
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteTask(@PathVariable Long id) {
+        try {
+            taskService.deleteTask(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // 204 No Content
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+        }
     }
 
 }

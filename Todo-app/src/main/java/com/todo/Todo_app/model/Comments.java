@@ -3,6 +3,8 @@ package com.todo.Todo_app.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 public class Comments {
@@ -22,5 +24,5 @@ public class Comments {
     @Column(name = "comment_text")
     private String commentText;
     @Column(name = "created_at")
-    private java.sql.Timestamp createdAt;
+    private LocalDateTime createdAt;
 }

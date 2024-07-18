@@ -9,7 +9,6 @@ public class TaskDTO {
     private String title;
     private String description;
     private Long projectId;
-    private Long createdBy;
     private Long assignedTo;
     private Long priority;
     private Long status;

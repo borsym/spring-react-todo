@@ -3,6 +3,8 @@ package com.todo.Todo_app.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 public class Teams {
@@ -11,13 +13,14 @@ public class Teams {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "created_by")
     private Users createdBy;
 
-    private java.sql.Timestamp createdAt;
-    private java.sql.Timestamp updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 }

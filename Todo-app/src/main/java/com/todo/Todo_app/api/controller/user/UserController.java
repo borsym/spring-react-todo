@@ -1,4 +1,4 @@
-package com.todo.Todo_app.api.controller.UserController;
+package com.todo.Todo_app.api.controller.user;
 
 import com.todo.Todo_app.model.Users;
 import com.todo.Todo_app.service.UserService;

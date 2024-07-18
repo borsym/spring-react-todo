@@ -41,8 +41,8 @@ CREATE TABLE IF NOT EXISTS tasks (
     status INTEGER REFERENCES status(id),
     priority INTEGER REFERENCES priorities(id),
     created_by INTEGER REFERENCES users(id),
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     );
 
 -- Create Comments table if it doesn't exist
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS comments (
                                         task_id INTEGER REFERENCES tasks(id),
     user_id INTEGER REFERENCES users(id),
     comment_text TEXT NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW()
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
 
 -- Create Attachments table if it doesn't exist
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS attachments (
                                            task_id INTEGER REFERENCES tasks(id),
     file_path VARCHAR(255) NOT NULL,
     uploaded_by INTEGER REFERENCES users(id),
-    uploaded_at TIMESTAMP NOT NULL DEFAULT NOW()
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
 
 -- Create Teams table if it doesn't exist
@@ -68,8 +68,8 @@ CREATE TABLE IF NOT EXISTS teams (
                                      id SERIAL PRIMARY KEY,
                                      name VARCHAR(100) NOT NULL,
     created_by INTEGER REFERENCES users(id),
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     );
 
 -- Create TeamMembers table if it doesn't exist
@@ -96,7 +96,7 @@ INSERT INTO comments (task_id, user_id, comment_text, created_at) VALUES
                                                                       (1, 2, 'This is a comment by Bob.', NOW()),
                                                                       (2, 1, 'This is a comment by Alice.', NOW()),
                                                                       (3, 3, 'This is a comment by Charlie.', NOW());
-INSERT INTO attachments (task_id, file_path, uploaded_by, uploaded_at) VALUES
+INSERT INTO attachments (task_id, file_path, uploaded_by, created_at) VALUES
                                                                            (1, '/files/task1_attachment.txt', 1, NOW()),
                                                                            (2, '/files/task2_attachment.jpg', 2, NOW());
 INSERT INTO teams (name, created_by, created_at, updated_at) VALUES
