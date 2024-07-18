@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Data
 public class Users {
@@ -19,7 +22,9 @@ public class Users {
     @Column(name = "password", nullable = false)
     @JsonIgnore
     private String password;
-
+// TODO check if its req
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private Set<TeamMembers> teams = new HashSet<>();
 
 
 }
