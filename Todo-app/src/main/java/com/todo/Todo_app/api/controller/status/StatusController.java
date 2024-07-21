@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/status")
@@ -36,7 +37,7 @@ public class StatusController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteStatus(@PathVariable Long id) {
+    public ResponseEntity<?> deleteStatus(@PathVariable UUID id) {
         try {
             statusService.deleteStatus(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/comments")
@@ -22,7 +23,7 @@ public class CommentController {
     }
 
     @PostMapping("/tasks/{id}")
-    public ResponseEntity<?> addComment(@PathVariable Long id, @RequestBody CommentDTO commentDTO, @AuthenticationPrincipal Users user) {
+    public ResponseEntity<?> addComment(@PathVariable UUID id, @RequestBody CommentDTO commentDTO, @AuthenticationPrincipal Users user) {
         try{
             Comments comment = commentService.createComment(id, commentDTO, user);
             return ResponseEntity.ok(comment);
@@ -32,7 +33,7 @@ public class CommentController {
     }
 
     @GetMapping("/tasks/{id}")
-    public ResponseEntity<?> getCommentsByTaskId(@PathVariable Long id) {
+    public ResponseEntity<?> getCommentsByTaskId(@PathVariable UUID id) {
         try {
             List<Comments> comments = commentService.getCommentsByTaskId(id);
             return ResponseEntity.ok(comments); // TODO change this to created
@@ -42,7 +43,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/tasks/{id}")
-    public ResponseEntity<?> deleteComment(@PathVariable Long id) {
+    public ResponseEntity<?> deleteComment(@PathVariable UUID id) {
         try {
             commentService.deleteComment(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // 204 No Content

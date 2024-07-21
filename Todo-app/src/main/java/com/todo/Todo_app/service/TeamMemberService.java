@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.todo.Todo_app.utils.Utils.findOrThrow;
 
@@ -32,7 +33,7 @@ public class TeamMemberService {
     }
 
     @Transactional
-    public TeamMembers addMemberToTeam(Long teamId, Long userId) {
+    public TeamMembers addMemberToTeam(UUID teamId, UUID userId) {
         Teams team = findOrThrow(teamRepository, teamId, "Teams");
         Users user = findOrThrow(userRepository, userId, "Users");
 
@@ -47,7 +48,7 @@ public class TeamMemberService {
         return teamMembersRepository.save(teamMember);
     }
 
-    public void deleteTeamMember(Long teamId, Long userId) {
+    public void deleteTeamMember(UUID teamId, UUID userId) {
         Teams team = findOrThrow(teamRepository, teamId, "Teams");
         Users user = findOrThrow(userRepository, userId, "Users");
         TeamMembers teamMember = teamMembersRepository.findByTeamAndUser(team, user)

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/teams/members")
@@ -25,7 +26,7 @@ public class TeamMemberController {
     }
 
     @PostMapping("/{teamId}/{userId}")
-    public ResponseEntity<?> addMemberToTeam(@PathVariable(value = "teamId") Long teamId, @PathVariable(value = "userId") Long userId) {
+    public ResponseEntity<?> addMemberToTeam(@PathVariable(value = "teamId") UUID teamId, @PathVariable(value = "userId") UUID userId) {
         try {
             TeamMembers teamMember = teamMembersService.addMemberToTeam(teamId, userId);
             return ResponseEntity.ok(teamMember);
@@ -35,7 +36,7 @@ public class TeamMemberController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteTeamMember(@PathVariable(value = "teamId") Long teamId, @PathVariable(value = "userId") Long userId) {
+    public ResponseEntity<?> deleteTeamMember(@PathVariable(value = "teamId") UUID teamId, @PathVariable(value = "userId") UUID userId) {
         try {
             teamMembersService.deleteTeamMember(teamId, userId);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // 204 No Content

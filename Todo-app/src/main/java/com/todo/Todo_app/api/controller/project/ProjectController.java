@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/projects")
@@ -35,7 +36,7 @@ public class ProjectController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteProject(@PathVariable Long id) {
+    public ResponseEntity<?> deleteProject(@PathVariable UUID id) {
         try {
             projectService.deleteProject(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

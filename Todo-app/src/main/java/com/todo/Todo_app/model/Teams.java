@@ -6,14 +6,15 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Data
 public class Teams {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", nullable = false, unique = true)
+    private UUID id;
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
@@ -21,9 +22,6 @@ public class Teams {
     @ManyToOne
     @JoinColumn(name = "created_by")
     private Users createdBy;
-// TODO check if its req
-//    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
-//    private Set<TeamMembers> members = new HashSet<>();
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

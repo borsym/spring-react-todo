@@ -7,6 +7,7 @@ import com.todo.Todo_app.repository.UserRoleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.todo.Todo_app.utils.Utils.findOrThrow;
 
@@ -22,7 +23,7 @@ public class UserRoleService {
         this.roleRepository = roleRepository;
     }
 
-    public UserRoles addRoleToUser(Long userId, Long roleId) {
+    public UserRoles addRoleToUser(UUID userId, UUID roleId) {
         Users user = findOrThrow(userRepository, userId, "Users");
         Roles role = findOrThrow(roleRepository, roleId, "Roles");
         if(userRoleRepository.existsByRoleAndUser(role,user)) {
@@ -39,7 +40,7 @@ public class UserRoleService {
         return userRoleRepository.findAll();
     }
 
-    public void deleteRoleToUser(Long userId, Long roleId) {
+    public void deleteRoleToUser(UUID userId, UUID roleId) {
         Roles role = findOrThrow(roleRepository,roleId, "Roles");
         Users user = findOrThrow(userRepository, userId, "Users");
         UserRoles userRoles = userRoleRepository.findByRoleAndUser(role, user)

@@ -9,6 +9,7 @@ import com.todo.Todo_app.repository.StatusRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class StatusService {
@@ -32,7 +33,7 @@ public class StatusService {
         return statusRepository.findAll();
     }
 
-    public void deleteStatus(Long id) {
+    public void deleteStatus(UUID id) {
         Status status = statusRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Status doesn't exists"));
         statusRepository.delete(status);

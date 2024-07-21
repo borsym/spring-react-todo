@@ -3,13 +3,15 @@ package com.todo.Todo_app.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Entity
 @Data
 public class UserRoles {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", nullable = false, unique = true)
+    private UUID id;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users user;

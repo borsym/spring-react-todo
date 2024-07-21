@@ -4,12 +4,14 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class TaskDTO {
     private String title;
     private String description;
-    private Long projectId;
-    private Long assignedTo;
-    private Long priority;
-    private Long status;
+    private UUID projectId;
+    private UUID assignedTo;
+    private UUID priority;
+    private UUID status;
 }

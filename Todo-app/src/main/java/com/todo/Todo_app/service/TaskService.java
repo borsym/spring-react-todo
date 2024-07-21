@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.todo.Todo_app.utils.Utils.findOrThrow;
 
@@ -32,7 +33,7 @@ public class TaskService {
         return taskRepository.findAll();
     }
 
-    public Optional<Tasks> getTaskById(Long id) {
+    public Optional<Tasks> getTaskById(UUID id) {
         return taskRepository.findById(id);
     }
 
@@ -67,7 +68,7 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public Tasks updateTask(Long id, TaskDTO taskDTO) {
+    public Tasks updateTask(UUID id, TaskDTO taskDTO) {
 
         Tasks task = findOrThrow(taskRepository, id, "Tasks");
 
@@ -103,7 +104,7 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public void deleteTask(Long id) {
+    public void deleteTask(UUID id) {
         Tasks task = findOrThrow(taskRepository, id, "Tasks");
         taskRepository.delete(task);
     }

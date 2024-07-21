@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import static com.todo.Todo_app.utils.Utils.findOrThrow;
 
@@ -25,7 +26,7 @@ public class CommentService {
     }
 
     // TODO not good
-    public Comments createComment(Long id, CommentDTO commentDTO, Users user) {
+    public Comments createComment(UUID id, CommentDTO commentDTO, Users user) {
         Tasks task = findOrThrow(taskRepository, id, "Tasks");
 
         Comments comment = new Comments();
@@ -43,12 +44,12 @@ public class CommentService {
         return comment;
     }
 
-    public List<Comments> getCommentsByTaskId(Long id) {
+    public List<Comments> getCommentsByTaskId(UUID id) {
         Tasks task = findOrThrow(taskRepository, id, "Tasks");
         return commentRepository.findByTask(task);
     }
 
-    public void deleteComment(Long id) {
+    public void deleteComment(UUID id) {
         Comments comments = findOrThrow(commentRepository, id, "Comments");
         commentRepository.delete(comments);
     }

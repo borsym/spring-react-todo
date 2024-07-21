@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/roles")
@@ -33,7 +34,7 @@ public class RoleController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteRole(@PathVariable Long id) {
+    public ResponseEntity<?> deleteRole(@PathVariable UUID id) {
         try {
             roleService.deleteRole(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.todo.Todo_app.utils.Utils.findOrThrow;
 
@@ -26,7 +27,7 @@ public class TeamService {
         return teamRepository.findAll();
     }
 
-    public Optional<Teams> getTeamById(Long id) {
+    public Optional<Teams> getTeamById(UUID id) {
         return teamRepository.findById(id);
     }
 
@@ -41,7 +42,7 @@ public class TeamService {
         return teamRepository.save(team);
     }
 
-    public Teams updateTeam(Long id, TeamDTO teamDTO) {
+    public Teams updateTeam(UUID id, TeamDTO teamDTO) {
         Teams team = findOrThrow(teamRepository, id, "Teams");
         if (teamDTO.getName() != null) {
             team.setName(teamDTO.getName());
@@ -49,7 +50,7 @@ public class TeamService {
         return teamRepository.save(team);
     }
 
-    public void deleteTeam(Long id) {
+    public void deleteTeam(UUID id) {
         Teams team = findOrThrow(teamRepository, id, "Teams");
         teamRepository.delete(team);
     }

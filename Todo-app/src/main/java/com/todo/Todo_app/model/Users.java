@@ -8,15 +8,16 @@ import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Data
 public class Users {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", nullable = false, unique = true)
+    private UUID id;
     @Column(name = "username", nullable = false, unique = true)
     private String username;
     @Column(name = "email", nullable = false, unique = true)

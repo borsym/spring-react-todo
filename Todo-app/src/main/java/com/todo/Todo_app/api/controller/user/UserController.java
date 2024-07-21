@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -27,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Users> getUserById(@PathVariable Long id) {
+    public ResponseEntity<Users> getUserById(@PathVariable UUID id) {
         Optional<Users> user = userService.getUserById(id);
         return user
                 .map(ResponseEntity::ok) // value present ResponseEntity.ok(user.get())

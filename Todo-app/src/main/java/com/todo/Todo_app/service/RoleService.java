@@ -6,6 +6,7 @@ import com.todo.Todo_app.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class RoleService {
@@ -29,7 +30,7 @@ public class RoleService {
         return roleRepository.findAll();
     }
 
-    public void deleteRole(Long id) {
+    public void deleteRole(UUID id) {
         Roles role = roleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Role doesn't exists"));
         roleRepository.delete(role);

@@ -12,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/tasks")
@@ -28,7 +29,7 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tasks> getTaskById(@PathVariable Long id) {
+    public ResponseEntity<Tasks> getTaskById(@PathVariable UUID id) {
         return taskService.getTaskById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -45,7 +46,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO) {
+    public ResponseEntity<?> updateTask(@PathVariable UUID id, @RequestBody TaskDTO taskDTO) {
         try {
             Tasks updateTask = taskService.updateTask(id, taskDTO);
             return ResponseEntity.ok(updateTask);
@@ -55,7 +56,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteTask(@PathVariable Long id) {
+    public ResponseEntity<?> deleteTask(@PathVariable UUID id) {
         try {
             taskService.deleteTask(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // 204 No Content

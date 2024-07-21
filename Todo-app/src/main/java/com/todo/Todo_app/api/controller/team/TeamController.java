@@ -14,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/teams")
@@ -41,7 +42,7 @@ public class TeamController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateTeam(@PathVariable Long id, @RequestBody TeamDTO teamDTO) {
+    public ResponseEntity<?> updateTeam(@PathVariable UUID id, @RequestBody TeamDTO teamDTO) {
         try {
             Teams updateTeam = teamService.updateTeam(id, teamDTO);
             return ResponseEntity.ok(updateTeam);
@@ -51,7 +52,7 @@ public class TeamController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteTeam(@PathVariable Long id) {
+    public ResponseEntity<?> deleteTeam(@PathVariable UUID id) {
         try {
             teamService.deleteTeam(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // 204 No Content

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -29,7 +30,7 @@ public class UserRolesController {
     }
 
     @PostMapping("/{userId}/roles/{roleId}")
-    public ResponseEntity<?> addRoleToUser(@PathVariable(value = "userId") Long userId, @PathVariable(value = "roleId") Long roleId) {
+    public ResponseEntity<?> addRoleToUser(@PathVariable(value = "userId") UUID userId, @PathVariable(value = "roleId") UUID roleId) {
         try {
             UserRoles userRole = userRoleService.addRoleToUser(userId, roleId);
             return ResponseEntity.ok(userRole);
@@ -39,7 +40,7 @@ public class UserRolesController {
     }
 
     @DeleteMapping("/{userId}/roles/{roleId}")
-    public ResponseEntity<?> deleteRoleToUser(@PathVariable(value = "userId") Long userId, @PathVariable(value = "roleId") Long roleId) {
+    public ResponseEntity<?> deleteRoleToUser(@PathVariable(value = "userId") UUID userId, @PathVariable(value = "roleId") UUID roleId) {
         try {
             userRoleService.deleteRoleToUser(userId, roleId);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // 204 No Content

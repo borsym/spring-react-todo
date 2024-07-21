@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProjectService {
@@ -21,11 +22,12 @@ public class ProjectService {
     }
 
     public Projects createProject(ProjectDTO projectsDTO, Users user) {
-//        if (projectRepository.findByName(projectsDTO.getProjectName())) {
-//            throw new RuntimeException("Project already exists");
-//        }
+        var projectName = projectsDTO.getName();
+        if (projectRepository.findByName(projectName).isPresent()) {
+            throw new RuntimeException("Project already exists");
+        }
         Projects project = new Projects();
-        project.setName(projectsDTO.getProjectName());
+        project.setName(projectName);
         project.setDescription(projectsDTO.getDescription());
         project.setCreatedBy(user);
         return projectRepository.save(project);
@@ -35,7 +37,7 @@ public class ProjectService {
         return projectRepository.findAll();
     }
 
-    public void deleteProject(Long id) {
+    public void deleteProject(UUID id) {
         Projects projects = projectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Role doesn't exists"));
         projectRepository.delete(projects);
