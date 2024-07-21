@@ -24,10 +24,10 @@ public class TeamMemberController {
         return teamMembersService.getAllTeamMembers();
     }
 
-    @PostMapping("/{id}") // TODO rewrite this userid,teamid
-    public ResponseEntity<?> addMemberToTeam(@PathVariable Long id, @RequestBody TeamMemberDTO teamMemberDTO) {
+    @PostMapping("/{teamId}/{userId}")
+    public ResponseEntity<?> addMemberToTeam(@PathVariable(value = "teamId") Long teamId, @PathVariable(value = "userId") Long userId) {
         try {
-            TeamMembers teamMember = teamMembersService.addMemberToTeam(id, teamMemberDTO);
+            TeamMembers teamMember = teamMembersService.addMemberToTeam(teamId, userId);
             return ResponseEntity.ok(teamMember);
         }catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
@@ -35,9 +35,9 @@ public class TeamMemberController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteTeamMember(@PathVariable Long id, @RequestBody TeamMemberDTO teamMemberDTO) {
+    public ResponseEntity<?> deleteTeamMember(@PathVariable(value = "teamId") Long teamId, @PathVariable(value = "userId") Long userId) {
         try {
-            teamMembersService.deleteTeamMember(id, teamMemberDTO);
+            teamMembersService.deleteTeamMember(teamId, userId);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // 204 No Content
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());

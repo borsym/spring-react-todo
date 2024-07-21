@@ -32,9 +32,9 @@ public class TeamMemberService {
     }
 
     @Transactional
-    public TeamMembers addMemberToTeam(Long id, TeamMemberDTO teamMemberDTO) {
-        Teams team = findOrThrow(teamRepository, id, "Teams");
-        Users user = findOrThrow(userRepository, teamMemberDTO.getIdUser(), "Users");
+    public TeamMembers addMemberToTeam(Long teamId, Long userId) {
+        Teams team = findOrThrow(teamRepository, teamId, "Teams");
+        Users user = findOrThrow(userRepository, userId, "Users");
 
         if (teamMembersRepository.existsByTeamAndUser(team, user)) {
             throw new RuntimeException("User is already a member of the team");
@@ -47,9 +47,9 @@ public class TeamMemberService {
         return teamMembersRepository.save(teamMember);
     }
 
-    public void deleteTeamMember(Long id, TeamMemberDTO teamMemberDTO) {
-        Teams team = findOrThrow(teamRepository, id, "Teams");
-        Users user = findOrThrow(userRepository, teamMemberDTO.getIdUser(), "Users");
+    public void deleteTeamMember(Long teamId, Long userId) {
+        Teams team = findOrThrow(teamRepository, teamId, "Teams");
+        Users user = findOrThrow(userRepository, userId, "Users");
         TeamMembers teamMember = teamMembersRepository.findByTeamAndUser(team, user)
                 .orElseThrow(() -> new RuntimeException("Team member not found"));
         System.out.println(teamMember);

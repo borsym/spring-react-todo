@@ -43,7 +43,7 @@ public class UserRoleService {
         Roles role = findOrThrow(roleRepository,roleId, "Roles");
         Users user = findOrThrow(userRepository, userId, "Users");
         UserRoles userRoles = userRoleRepository.findByRoleAndUser(role, user)
-                .orElseThrow(() -> new RuntimeException("Team member not found"));
+                .orElseThrow(() -> new RuntimeException("User role not found"));
         System.out.println(userRoles);
         userRoleRepository.delete(userRoles);
     }
