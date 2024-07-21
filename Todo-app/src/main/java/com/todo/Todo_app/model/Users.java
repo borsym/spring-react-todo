@@ -3,6 +3,8 @@ package com.todo.Todo_app.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,12 +21,7 @@ public class Users {
     private String username;
     @Column(name = "email", nullable = false, unique = true)
     private String email;
-    @Column(name = "password", nullable = false)
     @JsonIgnore
+    @Column(name = "password", nullable = false)
     private String password;
-// TODO check if its req
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private Set<TeamMembers> teams = new HashSet<>();
-
-
 }

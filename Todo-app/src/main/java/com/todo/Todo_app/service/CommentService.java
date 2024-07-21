@@ -3,9 +3,11 @@ package com.todo.Todo_app.service;
 
 import com.todo.Todo_app.dto.CommentDTO;
 import com.todo.Todo_app.model.Comments;
+import com.todo.Todo_app.model.Tasks;
 import com.todo.Todo_app.model.Users;
 import com.todo.Todo_app.repository.CommentRepository;
 import com.todo.Todo_app.repository.TaskRepository;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,7 +26,7 @@ public class CommentService {
 
     // TODO not good
     public Comments createComment(Long id, CommentDTO commentDTO, Users user) {
-        var task = findOrThrow(taskRepository, id, "Tasks");
+        Tasks task = findOrThrow(taskRepository, id, "Tasks");
 
         Comments comment = new Comments();
         comment.setTask(task);
@@ -41,12 +43,13 @@ public class CommentService {
         return comment;
     }
 
-//    public Comments addComment(Long id, CommentDTO commentDTO, Users user) {
-//
-//    }
-
     public List<Comments> getCommentsByTaskId(Long id) {
-        var task = findOrThrow(taskRepository, id, "Tasks");
+        Tasks task = findOrThrow(taskRepository, id, "Tasks");
         return commentRepository.findByTask(task);
+    }
+
+    public void deleteComment(Long id) {
+        Comments comments = findOrThrow(commentRepository, id, "Comments");
+        commentRepository.delete(comments);
     }
 }

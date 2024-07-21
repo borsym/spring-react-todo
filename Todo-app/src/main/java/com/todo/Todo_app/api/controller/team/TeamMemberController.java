@@ -1,4 +1,4 @@
-package com.todo.Todo_app.api.controller.teammember;
+package com.todo.Todo_app.api.controller.team;
 
 import com.todo.Todo_app.dto.TeamMemberDTO;
 import com.todo.Todo_app.model.TeamMembers;
@@ -24,10 +24,14 @@ public class TeamMemberController {
         return teamMembersService.getAllTeamMembers();
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}") // TODO rewrite this userid,teamid
     public ResponseEntity<?> addMemberToTeam(@PathVariable Long id, @RequestBody TeamMemberDTO teamMemberDTO) {
-        TeamMembers teamMember = teamMembersService.addMemberToTeam(id, teamMemberDTO);
-        return ResponseEntity.ok(teamMember);
+        try {
+            TeamMembers teamMember = teamMembersService.addMemberToTeam(id, teamMemberDTO);
+            return ResponseEntity.ok(teamMember);
+        }catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
