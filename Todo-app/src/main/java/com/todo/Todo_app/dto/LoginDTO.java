@@ -1,9 +1,11 @@
-package com.todo.Todo_app.api.controller.model;
+package com.todo.Todo_app.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class LoginBody {
+@Builder
+public class LoginDTO {
     private String username;
     private String password;
 }

@@ -1,4 +1,4 @@
-package com.todo.Todo_app.api.controller.model;
+package com.todo.Todo_app.dto;
 
 import lombok.Data;
 

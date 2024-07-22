@@ -1,7 +1,7 @@
 package com.todo.Todo_app.service;
 
-import com.todo.Todo_app.api.controller.model.LoginBody;
-import com.todo.Todo_app.api.controller.model.RegistrationBody;
+import com.todo.Todo_app.dto.LoginDTO;
+import com.todo.Todo_app.dto.RegistrationDTO;
 import com.todo.Todo_app.exception.UserAlreadyExistsException;
 import com.todo.Todo_app.model.Users;
 import com.todo.Todo_app.repository.UserRepository;
@@ -14,10 +14,10 @@ import java.util.UUID;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private EncryptionService encryptionService;
-    private JWTService jwtService;
+    private final EncryptionService encryptionService;
+    private final JWTService jwtService;
 
 
     public UserService(UserRepository userRepository, EncryptionService encryptionService, JWTService jwtService) {
@@ -27,7 +27,7 @@ public class UserService {
     }
 
 
-    public Users registerUser(RegistrationBody registrationBody) throws UserAlreadyExistsException {
+    public Users registerUser(RegistrationDTO registrationBody) throws UserAlreadyExistsException {
         if(userRepository.findByEmail(registrationBody.getEmail()).isPresent()
                 || userRepository.findByUsername(registrationBody.getUsername()).isPresent()) {
             throw new UserAlreadyExistsException();
@@ -40,7 +40,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public String loginUser(LoginBody loginBody) {
+    public String loginUser(LoginDTO loginBody) {
         Optional<Users> optUser = userRepository.findByUsername(loginBody.getUsername());
         if (optUser.isEmpty()) return null;
 

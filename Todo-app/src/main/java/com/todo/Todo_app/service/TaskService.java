@@ -37,6 +37,7 @@ public class TaskService {
         return taskRepository.findById(id);
     }
 
+    // TODO use builder
     public Tasks createTask(TaskDTO taskDTO, Users user) {
         Tasks task = new Tasks();
         task.setTitle(taskDTO.getTitle());

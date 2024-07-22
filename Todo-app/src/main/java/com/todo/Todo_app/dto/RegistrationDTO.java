@@ -1,10 +1,12 @@
-package com.todo.Todo_app.api.controller.model;
+package com.todo.Todo_app.dto;
 
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class RegistrationBody {
+@Builder
+public class RegistrationDTO {
     private String username;
     private String email;
     private String password;

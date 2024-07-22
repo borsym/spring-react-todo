@@ -1,8 +1,8 @@
 package com.todo.Todo_app.api.controller.auth;
 
-import com.todo.Todo_app.api.controller.model.LoginBody;
-import com.todo.Todo_app.api.controller.model.LoginResponse;
-import com.todo.Todo_app.api.controller.model.RegistrationBody;
+import com.todo.Todo_app.dto.LoginDTO;
+import com.todo.Todo_app.dto.LoginResponse;
+import com.todo.Todo_app.dto.RegistrationDTO;
 import com.todo.Todo_app.model.Users;
 import com.todo.Todo_app.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -21,17 +21,16 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity registerUser(@RequestBody RegistrationBody registrationBody) {
+    public ResponseEntity<?> registerUser(@RequestBody RegistrationDTO registrationBody) {
         try {
-            userService.registerUser(registrationBody);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(registrationBody));
         }catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginBody loginBody) {
+    public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginDTO loginBody) {
         String jwt = userService.loginUser(loginBody);
         if (jwt == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
