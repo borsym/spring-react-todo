@@ -4,9 +4,7 @@ import com.todo.Todo_app.dto.LoginDTO;
 import com.todo.Todo_app.dto.RegistrationDTO;
 import com.todo.Todo_app.exception.UserAlreadyExistsException;
 import com.todo.Todo_app.model.Users;
-import com.todo.Todo_app.repository.UserRepository;
-import com.todo.Todo_app.service.impl.EncryptionServiceImp;
-import com.todo.Todo_app.service.impl.JWTServiceImp;
+
 
 import java.util.List;
 import java.util.Optional;

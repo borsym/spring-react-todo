@@ -3,6 +3,7 @@ package com.todo.Todo_app.api.controller.role;
 import com.todo.Todo_app.dto.RolesDTO;
 import com.todo.Todo_app.model.Roles;
 import com.todo.Todo_app.service.impl.RoleServiceImp;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/roles")
+@Slf4j
 public class RoleController {
     private final RoleServiceImp roleService;
 
@@ -27,8 +29,10 @@ public class RoleController {
     @PostMapping
     public ResponseEntity<?> createRole(@RequestBody RolesDTO rolesDTO) {
         try {
-            return ResponseEntity.ok(roleService.createRole(rolesDTO));
+            Roles roles = roleService.createRole(rolesDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(roles);
         } catch (Exception ex) {
+            log.error("Error occurred while creating role with details: {}", rolesDTO, ex);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("An error occurred");
         }
     }
@@ -39,6 +43,7 @@ public class RoleController {
             roleService.deleteRole(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (Exception ex) {
+            log.error("Error occurred while deleting role for ID: {}", id, ex);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
     }

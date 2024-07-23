@@ -3,6 +3,7 @@ package com.todo.Todo_app.api.controller.status;
 import com.todo.Todo_app.dto.StatusDTO;
 import com.todo.Todo_app.model.Status;
 import com.todo.Todo_app.service.impl.StatusServiceImp;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/status")
+@Slf4j
 public class StatusController {
     private final StatusServiceImp statusService;
 
@@ -27,8 +29,10 @@ public class StatusController {
     @PostMapping
     public ResponseEntity<?> createStatus(@RequestBody StatusDTO statusDTO) {
         try {
-            return ResponseEntity.ok(statusService.createStatus(statusDTO));
+            Status status = statusService.createStatus(statusDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(status);
         } catch (Exception ex) {
+            log.error("Error occurred while creating status with details: {}", statusDTO, ex);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("An error occurred");
         }
     }
@@ -39,6 +43,7 @@ public class StatusController {
             statusService.deleteStatus(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (Exception ex) {
+            log.error("Error occurred while deleting status for ID: {}", id, ex);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
     }

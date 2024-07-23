@@ -32,7 +32,7 @@ public class TeamController {
     public ResponseEntity<?> createTeam(@Valid @RequestBody TeamDTO teamDTO, @AuthenticationPrincipal Users user) {
         try {
             Teams newTeam = teamService.createTeam(teamDTO, user);
-            return ResponseEntity.ok(newTeam);
+            return ResponseEntity.status(HttpStatus.CREATED).body(newTeam);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while creating the team");
         }

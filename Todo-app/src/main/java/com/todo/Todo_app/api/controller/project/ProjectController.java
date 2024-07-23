@@ -4,6 +4,7 @@ import com.todo.Todo_app.dto.ProjectDTO;
 import com.todo.Todo_app.model.Projects;
 import com.todo.Todo_app.model.Users;
 import com.todo.Todo_app.service.impl.ProjectServiceImp;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/projects")
+@Slf4j
 public class ProjectController {
     private final ProjectServiceImp projectService;
 
@@ -29,8 +31,10 @@ public class ProjectController {
     @PostMapping
     public ResponseEntity<?> createProject(@RequestBody ProjectDTO projectDTO, @AuthenticationPrincipal Users user) {
         try {
-            return ResponseEntity.ok(projectService.createProject(projectDTO, user));
+            Projects projects = projectService.createProject(projectDTO, user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(projects);
         } catch (Exception ex) {
+            log.error("Error occurred while creating project with details: {}", projectDTO, ex);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("An error occurred");
         }
     }
@@ -41,6 +45,7 @@ public class ProjectController {
             projectService.deleteProject(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (Exception ex) {
+            log.error("Error occurred while deleting project for ID: {}", id, ex);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
     }

@@ -28,7 +28,7 @@ public class TeamMemberController {
     public ResponseEntity<?> addMemberToTeam(@PathVariable(value = "teamId") UUID teamId, @PathVariable(value = "userId") UUID userId) {
         try {
             TeamMembers teamMember = teamMembersService.addMemberToTeam(teamId, userId);
-            return ResponseEntity.ok(teamMember);
+            return ResponseEntity.status(HttpStatus.CREATED).body(teamMember);
         }catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
