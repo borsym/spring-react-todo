@@ -18,8 +18,8 @@ import static com.todo.Todo_app.utils.Utils.findOrThrow;
 
 @Service
 public class CommentService {
-    private CommentRepository commentRepository;
-    private TaskRepository taskRepository;
+    private final CommentRepository commentRepository;
+    private final TaskRepository taskRepository;
     public CommentService(CommentRepository commentRepository, TaskRepository taskRepository) {
         this.commentRepository = commentRepository;
         this.taskRepository = taskRepository;
@@ -29,12 +29,13 @@ public class CommentService {
     public Comments createComment(UUID id, CommentDTO commentDTO, Users user) {
         Tasks task = findOrThrow(taskRepository, id, "Tasks");
 
-        Comments comment = new Comments();
-        comment.setTask(task);
-        comment.setCommentText(commentDTO.getCommentText());
-        comment.setUser(user);
-        var now = LocalDateTime.now();
-        comment.setCreatedAt(now);
+        Comments comment = Comments.builder()
+                .task(task)
+                .commentText(commentDTO.getCommentText())
+                .user(user)
+                .createdAt(LocalDateTime.now())
+                .build();
+
 
         task.getComments().add(comment);
         // this looks like a bit hacking for me

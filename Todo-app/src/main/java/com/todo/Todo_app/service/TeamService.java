@@ -32,13 +32,7 @@ public class TeamService {
     }
 
     public Teams createTeam(TeamDTO teamDTO, Users user) {
-        Teams team = new Teams();
-        team.setCreatedBy(user);
-        team.setName(teamDTO.getName());
-
-        var now = LocalDateTime.now();
-        team.setCreatedAt(now);
-        team.setUpdatedAt(now);
+        Teams team = Teams.builder().createdBy(user).name(teamDTO.getName()).createdAt(LocalDateTime.now()).updatedAt(LocalDateTime.now()).build();
         return teamRepository.save(team);
     }
 

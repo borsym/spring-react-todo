@@ -24,8 +24,7 @@ public class StatusService {
         if (statusRepository.findBystatusName(statusName)) {
             throw new RuntimeException("Role already exists");
         }
-        Status status = new Status();
-        status.setStatusName(statusName);
+        Status status = Status.builder().statusName(statusName).build();
         return statusRepository.save(status);
     }
 

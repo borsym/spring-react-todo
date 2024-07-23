@@ -25,8 +25,7 @@ public class PriorityService {
         if (priorityRepository.findByPriorityName(priorityName).isPresent()) {
             throw new RuntimeException("Priority already exists");
         }
-        Priorities priorities = new Priorities();
-        priorities.setPriorityName(priorityName);
+        Priorities priorities = Priorities.builder().priorityName(priorityName).build();
         return priorityRepository.save(priorities);
     }
 

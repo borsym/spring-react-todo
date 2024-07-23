@@ -41,9 +41,7 @@ public class TeamMemberService {
             throw new RuntimeException("User is already a member of the team");
         }
 
-        TeamMembers teamMember = new TeamMembers();
-        teamMember.setTeam(team);
-        teamMember.setUser(user);
+        TeamMembers teamMember = TeamMembers.builder().team(team).user(user).build();
 
         return teamMembersRepository.save(teamMember);
     }
@@ -53,7 +51,6 @@ public class TeamMemberService {
         Users user = findOrThrow(userRepository, userId, "Users");
         TeamMembers teamMember = teamMembersRepository.findByTeamAndUser(team, user)
                 .orElseThrow(() -> new RuntimeException("Team member not found"));
-        System.out.println(teamMember);
         teamMembersRepository.delete(teamMember);
     }
 

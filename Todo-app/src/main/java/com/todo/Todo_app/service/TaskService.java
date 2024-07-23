@@ -37,72 +37,45 @@ public class TaskService {
         return taskRepository.findById(id);
     }
 
-    // TODO use builder
     public Tasks createTask(TaskDTO taskDTO, Users user) {
-        Tasks task = new Tasks();
-        task.setTitle(taskDTO.getTitle());
-        task.setDescription(taskDTO.getDescription());
+        Tasks.TasksBuilder taskBuilder = Tasks.builder().title(taskDTO.getTitle()).description(taskDTO.getDescription()).project(findOrThrow(projectRepository, taskDTO.getProjectId(), "Projects")).createdBy(user).updatedAt(LocalDateTime.now()).createdAt(LocalDateTime.now());
 
-        Projects project = findOrThrow(projectRepository, taskDTO.getProjectId(), "Projects");
-        task.setProject(project);
+        Optional.ofNullable(taskDTO.getPriority()).map(priorityId -> findOrThrow(priorityRepository, priorityId, "Priorities")).ifPresent(taskBuilder::priority);
 
-        task.setCreatedBy(user);
+        Optional.ofNullable(taskDTO.getAssignedTo()).map(assignedToId -> findOrThrow(userRepository, assignedToId, "Users")).ifPresent(taskBuilder::assignedTo);
 
-        var now = LocalDateTime.now();
-        task.setUpdatedAt(now);
-        task.setCreatedAt(now);
+        Optional.ofNullable(taskDTO.getStatus()).map(statusId -> findOrThrow(statusRepository, statusId, "Status")).ifPresent(taskBuilder::status);
 
-        if (taskDTO.getPriority() != null) {
-            Priorities priorities = findOrThrow(priorityRepository, taskDTO.getPriority(), "Priorities");
-            task.setPriority(priorities);
-        }
-        if (taskDTO.getAssignedTo() != null) {
-            Users assigned_user = findOrThrow(userRepository, taskDTO.getAssignedTo(), "Users");
-            task.setAssignedTo(assigned_user);
-        }
-
-        if (taskDTO.getStatus() != null) {
-            Status status = findOrThrow(statusRepository, taskDTO.getStatus(), "Status");
-            task.setStatus(status);
-        }
-
-        return taskRepository.save(task);
+        return taskRepository.save(taskBuilder.build());
     }
 
     public Tasks updateTask(UUID id, TaskDTO taskDTO) {
+        Tasks existingTask = findOrThrow(taskRepository, id, "Tasks");
 
-        Tasks task = findOrThrow(taskRepository, id, "Tasks");
+        Tasks.TasksBuilder taskBuilder = existingTask.toBuilder();
 
-        if (taskDTO.getTitle() != null) {
-            task.setTitle(taskDTO.getTitle());
-        }
+        Optional.ofNullable(taskDTO.getTitle()).ifPresent(taskBuilder::title);
+        Optional.ofNullable(taskDTO.getDescription()).ifPresent(taskBuilder::description);
 
-        if (taskDTO.getDescription() != null) {
-            task.setDescription(taskDTO.getDescription());
-        }
+        Optional.ofNullable(taskDTO.getProjectId())
+                .map(projectId -> findOrThrow(projectRepository, projectId, "Projects"))
+                .ifPresent(taskBuilder::project);
 
-        if (taskDTO.getProjectId() != null) {
-            Projects project = findOrThrow(projectRepository, taskDTO.getProjectId(), "Projects");
-            task.setProject(project);
-        }
+        Optional.ofNullable(taskDTO.getPriority())
+                .map(priorityId -> findOrThrow(priorityRepository, priorityId, "Priorities"))
+                .ifPresent(taskBuilder::priority);
 
-        if (taskDTO.getPriority() != null) {
-            Priorities priority = findOrThrow(priorityRepository, taskDTO.getPriority(), "Priorities");
-            task.setPriority(priority);
-        }
+        Optional.ofNullable(taskDTO.getAssignedTo())
+                .map(assignedToId -> findOrThrow(userRepository, assignedToId, "Users"))
+                .ifPresent(taskBuilder::assignedTo);
 
-        if (taskDTO.getAssignedTo() != null) {
-            Users assignedUser = findOrThrow(userRepository, taskDTO.getAssignedTo(), "Users");
-            task.setAssignedTo(assignedUser);
-        }
+        Optional.ofNullable(taskDTO.getStatus())
+                .map(statusId -> findOrThrow(statusRepository, statusId, "Status"))
+                .ifPresent(taskBuilder::status);
 
-        if (taskDTO.getStatus() != null) {
-            Status status = findOrThrow(statusRepository, taskDTO.getStatus(), "Status");
-            task.setStatus(status);
-        }
+        taskBuilder.updatedAt(LocalDateTime.now());
 
-        task.setUpdatedAt(LocalDateTime.now());
-        return taskRepository.save(task);
+        return taskRepository.save(taskBuilder.build());
     }
 
     public void deleteTask(UUID id) {

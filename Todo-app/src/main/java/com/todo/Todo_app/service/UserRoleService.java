@@ -29,9 +29,7 @@ public class UserRoleService {
         if(userRoleRepository.existsByRoleAndUser(role,user)) {
             throw new RuntimeException("User with role exists");
         }
-        UserRoles userRole = new UserRoles();
-        userRole.setRole(role);
-        userRole.setUser(user);
+        UserRoles userRole = UserRoles.builder().role(role).user(user).build();
 
         return  userRoleRepository.save(userRole);
     }

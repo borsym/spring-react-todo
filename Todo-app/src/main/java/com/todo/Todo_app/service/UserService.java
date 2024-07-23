@@ -28,14 +28,10 @@ public class UserService {
 
 
     public Users registerUser(RegistrationDTO registrationBody) throws UserAlreadyExistsException {
-        if(userRepository.findByEmail(registrationBody.getEmail()).isPresent()
-                || userRepository.findByUsername(registrationBody.getUsername()).isPresent()) {
+        if (userRepository.findByEmail(registrationBody.getEmail()).isPresent() || userRepository.findByUsername(registrationBody.getUsername()).isPresent()) {
             throw new UserAlreadyExistsException();
         }
-        Users user = new Users();
-        user.setEmail(registrationBody.getEmail());
-        user.setUsername(registrationBody.getUsername());
-        user.setPassword(encryptionService.encryptPassword(registrationBody.getPassword()));
+        Users user = Users.builder().email(registrationBody.getEmail()).username(registrationBody.getUsername()).password(encryptionService.encryptPassword(registrationBody.getPassword())).build();
 
         return userRepository.save(user);
     }

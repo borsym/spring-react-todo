@@ -21,8 +21,7 @@ public class RoleService {
         if (roleRepository.findByroleName(roleName)) {
             throw new RuntimeException("Role already exists");
         }
-        Roles role = new Roles();
-        role.setRoleName(roleName);
+        Roles role = Roles.builder().roleName(roleName).build();
         return roleRepository.save(role);
     }
 
