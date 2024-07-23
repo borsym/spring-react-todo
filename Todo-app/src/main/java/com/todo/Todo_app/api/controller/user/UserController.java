@@ -1,7 +1,7 @@
 package com.todo.Todo_app.api.controller.user;
 
 import com.todo.Todo_app.model.Users;
-import com.todo.Todo_app.service.UserService;
+import com.todo.Todo_app.service.impl.UserServiceImp;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,9 +16,9 @@ import java.util.UUID;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImp userService;
 
-    public UserController(UserService userService) {
+    public UserController(UserServiceImp userService) {
         this.userService = userService;
     }
 

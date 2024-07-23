@@ -1,16 +1,13 @@
 package com.todo.Todo_app.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.todo.Todo_app.api.controller.auth.AuthController;
 import com.todo.Todo_app.dto.RegistrationDTO;
-import com.todo.Todo_app.exception.UserAlreadyExistsException;
 import com.todo.Todo_app.repository.UserRepository;
-import com.todo.Todo_app.service.JWTService;
-import com.todo.Todo_app.service.UserService;
+import com.todo.Todo_app.service.impl.JWTServiceImp;
+import com.todo.Todo_app.service.impl.UserServiceImp;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatcher;
 import org.mockito.ArgumentMatchers;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +29,12 @@ public class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private UserService userService;
+    private UserServiceImp userService;
     @MockBean
     private UserRepository userRepository;
 
     @MockBean
-    private JWTService jwtService;
+    private JWTServiceImp jwtService;
     @Autowired
     private ObjectMapper objectMapper;
 

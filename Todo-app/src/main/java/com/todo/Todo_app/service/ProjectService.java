@@ -3,40 +3,12 @@ package com.todo.Todo_app.service;
 import com.todo.Todo_app.dto.ProjectDTO;
 import com.todo.Todo_app.model.Projects;
 import com.todo.Todo_app.model.Users;
-import com.todo.Todo_app.repository.ProjectRepository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
-@Service
-public class ProjectService {
-    private final ProjectRepository projectRepository;
-
-    public ProjectService(ProjectRepository projectRepository) {
-        this.projectRepository = projectRepository;
-    }
-
-    public Projects createProject(ProjectDTO projectsDTO, Users user) {
-        var projectName = projectsDTO.getName();
-        if (projectRepository.findByName(projectName).isPresent()) {
-            throw new RuntimeException("Project already exists");
-        }
-        Projects project = Projects.builder()
-                .name(projectName)
-                .description(projectsDTO.getDescription())
-                .createdBy(user).build();
-
-        return projectRepository.save(project);
-    }
-
-    public List<Projects> getAllProjects() {
-        return projectRepository.findAll();
-    }
-
-    public void deleteProject(UUID id) {
-        Projects projects = projectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Role doesn't exists"));
-        projectRepository.delete(projects);
-    }
+public interface ProjectService {
+    Projects createProject(ProjectDTO projectsDTO, Users user);
+    List<Projects> getAllProjects();
+    void deleteProject(UUID id);
 }

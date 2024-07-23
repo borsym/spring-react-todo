@@ -3,7 +3,7 @@ package com.todo.Todo_app.api.security;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.todo.Todo_app.model.Users;
 import com.todo.Todo_app.repository.UserRepository;
-import com.todo.Todo_app.service.JWTService;
+import com.todo.Todo_app.service.impl.JWTServiceImp;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,10 +21,10 @@ import java.util.Optional;
 @Component
 public class JWTRequestFilter extends OncePerRequestFilter {
 
-    private JWTService jwtService;
+    private JWTServiceImp jwtService;
     private UserRepository userRepository;
 
-    public JWTRequestFilter(JWTService jwtService, UserRepository userRepository) {
+    public JWTRequestFilter(JWTServiceImp jwtService, UserRepository userRepository) {
         this.jwtService = jwtService;
         this.userRepository = userRepository;
     }

@@ -5,6 +5,9 @@ import com.todo.Todo_app.dto.RegistrationDTO;
 import com.todo.Todo_app.exception.UserAlreadyExistsException;
 import com.todo.Todo_app.model.Users;
 import com.todo.Todo_app.repository.UserRepository;
+import com.todo.Todo_app.service.impl.EncryptionServiceImp;
+import com.todo.Todo_app.service.impl.JWTServiceImp;
+import com.todo.Todo_app.service.impl.UserServiceImp;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,12 +28,12 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
     @Mock
-    private EncryptionService encryptionService;
+    private EncryptionServiceImp encryptionService;
     @Mock
-    private JWTService jwtService;
+    private JWTServiceImp jwtService;
 
     @InjectMocks
-    private UserService userService;
+    private UserServiceImp userService;
     private final String username = "test_user";
     private final String password = "secret";
     private final String encryptedPassword = "encrypted_secret";

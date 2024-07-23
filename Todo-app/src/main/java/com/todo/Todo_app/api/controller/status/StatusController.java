@@ -1,11 +1,8 @@
 package com.todo.Todo_app.api.controller.status;
 
-import com.todo.Todo_app.dto.RolesDTO;
 import com.todo.Todo_app.dto.StatusDTO;
-import com.todo.Todo_app.model.Roles;
 import com.todo.Todo_app.model.Status;
-import com.todo.Todo_app.service.RoleService;
-import com.todo.Todo_app.service.StatusService;
+import com.todo.Todo_app.service.impl.StatusServiceImp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +13,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/status")
 public class StatusController {
-    private final StatusService statusService;
+    private final StatusServiceImp statusService;
 
-    public StatusController(StatusService statusService) {
+    public StatusController(StatusServiceImp statusService) {
         this.statusService = statusService;
     }
 

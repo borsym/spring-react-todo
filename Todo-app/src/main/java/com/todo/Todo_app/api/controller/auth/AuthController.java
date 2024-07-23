@@ -4,7 +4,7 @@ import com.todo.Todo_app.dto.LoginDTO;
 import com.todo.Todo_app.dto.LoginResponse;
 import com.todo.Todo_app.dto.RegistrationDTO;
 import com.todo.Todo_app.model.Users;
-import com.todo.Todo_app.service.UserService;
+import com.todo.Todo_app.service.impl.UserServiceImp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final UserService userService;
+    private final UserServiceImp userService;
 
-    public AuthController(UserService userService) {
+    public AuthController(UserServiceImp userService) {
         this.userService = userService;
     }
 

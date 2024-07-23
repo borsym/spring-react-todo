@@ -1,12 +1,9 @@
 package com.todo.Todo_app.api.controller.team;
 
-import com.todo.Todo_app.dto.TaskDTO;
 import com.todo.Todo_app.dto.TeamDTO;
-import com.todo.Todo_app.model.Tasks;
 import com.todo.Todo_app.model.Teams;
 import com.todo.Todo_app.model.Users;
-import com.todo.Todo_app.service.TaskService;
-import com.todo.Todo_app.service.TeamService;
+import com.todo.Todo_app.service.impl.TeamServiceImp;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +17,9 @@ import java.util.UUID;
 @RequestMapping("/teams")
 public class TeamController {
 
-    private TeamService teamService;
+    private TeamServiceImp teamService;
 
-    public TeamController(TeamService teamService) {
+    public TeamController(TeamServiceImp teamService) {
         this.teamService = teamService;
     }
 

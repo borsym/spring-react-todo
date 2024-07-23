@@ -3,7 +3,7 @@ package com.todo.Todo_app.api.controller.comment;
 import com.todo.Todo_app.dto.CommentDTO;
 import com.todo.Todo_app.model.Comments;
 import com.todo.Todo_app.model.Users;
-import com.todo.Todo_app.service.CommentService;
+import com.todo.Todo_app.service.impl.CommentServiceImp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,9 +16,9 @@ import java.util.UUID;
 @RequestMapping("/comments")
 public class CommentController {
 
-    private final CommentService commentService;
+    private final CommentServiceImp commentService;
 
-    public CommentController(CommentService commentService) {
+    public CommentController(CommentServiceImp commentService) {
         this.commentService = commentService;
     }
 

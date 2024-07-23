@@ -2,7 +2,7 @@ package com.todo.Todo_app.api.controller.role;
 
 import com.todo.Todo_app.dto.RolesDTO;
 import com.todo.Todo_app.model.Roles;
-import com.todo.Todo_app.service.RoleService;
+import com.todo.Todo_app.service.impl.RoleServiceImp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +13,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/roles")
 public class RoleController {
-    private final RoleService roleService;
+    private final RoleServiceImp roleService;
 
-    public RoleController(RoleService roleService) {
+    public RoleController(RoleServiceImp roleService) {
         this.roleService = roleService;
     }
 

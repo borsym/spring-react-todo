@@ -2,7 +2,7 @@ package com.todo.Todo_app.api.controller.priority;
 
 import com.todo.Todo_app.dto.PriorityDTO;
 import com.todo.Todo_app.model.Priorities;
-import com.todo.Todo_app.service.PriorityService;
+import com.todo.Todo_app.service.impl.PriorityServiceImp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +13,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/priorities")
 public class PriorityController {
-    private final PriorityService priorityService;
+    private final PriorityServiceImp priorityService;
 
-    public PriorityController(PriorityService priorityService) {
+    public PriorityController(PriorityServiceImp priorityService) {
         this.priorityService = priorityService;
     }
 

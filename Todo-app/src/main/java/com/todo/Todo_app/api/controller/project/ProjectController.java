@@ -3,7 +3,7 @@ package com.todo.Todo_app.api.controller.project;
 import com.todo.Todo_app.dto.ProjectDTO;
 import com.todo.Todo_app.model.Projects;
 import com.todo.Todo_app.model.Users;
-import com.todo.Todo_app.service.ProjectService;
+import com.todo.Todo_app.service.impl.ProjectServiceImp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,9 +15,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/projects")
 public class ProjectController {
-    private final ProjectService projectService;
+    private final ProjectServiceImp projectService;
 
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(ProjectServiceImp projectService) {
         this.projectService = projectService;
     }
 

@@ -1,7 +1,7 @@
 package com.todo.Todo_app.api.controller.user;
 
 import com.todo.Todo_app.model.UserRoles;
-import com.todo.Todo_app.service.UserRoleService;
+import com.todo.Todo_app.service.impl.UserRoleServiceImp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +13,9 @@ import java.util.UUID;
 @RequestMapping("/users")
 public class UserRolesController {
 
-    private UserRoleService userRoleService;
+    private UserRoleServiceImp userRoleService;
 
-    public UserRolesController(UserRoleService userRoleService) {
+    public UserRolesController(UserRoleServiceImp userRoleService) {
         this.userRoleService = userRoleService;
     }
 
