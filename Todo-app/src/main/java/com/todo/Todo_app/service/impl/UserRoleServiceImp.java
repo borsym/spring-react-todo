@@ -1,5 +1,6 @@
 package com.todo.Todo_app.service.impl;
 
+import com.todo.Todo_app.exception.RoleNotFoundException;
 import com.todo.Todo_app.model.*;
 import com.todo.Todo_app.repository.RoleRepository;
 import com.todo.Todo_app.repository.UserRepository;
@@ -39,11 +40,11 @@ public class UserRoleServiceImp implements UserRoleService {
         return userRoleRepository.findAll();
     }
     @Override
-    public void deleteRoleToUser(UUID userId, UUID roleId) {
+    public void deleteRoleToUser(UUID userId, UUID roleId) throws RoleNotFoundException {
         Roles role = findOrThrow(roleRepository,roleId, "Roles");
         Users user = findOrThrow(userRepository, userId, "Users");
         UserRoles userRoles = userRoleRepository.findByRoleAndUser(role, user)
-                .orElseThrow(() -> new RuntimeException("User role not found"));
+                .orElseThrow(RoleNotFoundException::new);
         System.out.println(userRoles);
         userRoleRepository.delete(userRoles);
     }

@@ -43,7 +43,7 @@ public class UserRolesController {
     public ResponseEntity<?> deleteRoleToUser(@PathVariable(value = "userId") UUID userId, @PathVariable(value = "roleId") UUID roleId) {
         try {
             userRoleService.deleteRoleToUser(userId, roleId);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // 204 No Content
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }

@@ -32,7 +32,7 @@ public class PriorityServiceImp implements PriorityService {
     @Override
     public void deletePriority(UUID id) {
         Priorities priorities = priorityRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Role doesn't exists"));
+                .orElseThrow(() -> new RuntimeException("Priorities doesn't exists"));
         priorityRepository.delete(priorities);
     }
 }

@@ -1,6 +1,7 @@
 package com.todo.Todo_app.service.impl;
 
 import com.todo.Todo_app.dto.RolesDTO;
+import com.todo.Todo_app.exception.RoleNotFoundException;
 import com.todo.Todo_app.model.Roles;
 import com.todo.Todo_app.repository.RoleRepository;
 import com.todo.Todo_app.service.RoleService;
@@ -30,9 +31,9 @@ public class RoleServiceImp implements RoleService {
         return roleRepository.findAll();
     }
     @Override
-    public void deleteRole(UUID id) {
+    public void deleteRole(UUID id) throws RoleNotFoundException {
         Roles role = roleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Role doesn't exists"));
+                .orElseThrow(RoleNotFoundException::new);
         roleRepository.delete(role);
     }
 }

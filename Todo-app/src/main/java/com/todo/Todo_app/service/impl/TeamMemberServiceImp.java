@@ -1,5 +1,6 @@
 package com.todo.Todo_app.service.impl;
 
+import com.todo.Todo_app.exception.UserAlreadyMemberOfTeamException;
 import com.todo.Todo_app.model.TeamMembers;
 import com.todo.Todo_app.model.Teams;
 import com.todo.Todo_app.model.Users;
@@ -35,12 +36,12 @@ public class TeamMemberServiceImp implements TeamMemberService {
 
     @Override
     @Transactional
-    public TeamMembers addMemberToTeam(UUID teamId, UUID userId) {
+    public TeamMembers addMemberToTeam(UUID teamId, UUID userId) throws UserAlreadyMemberOfTeamException {
         Teams team = findOrThrow(teamRepository, teamId, "Teams");
         Users user = findOrThrow(userRepository, userId, "Users");
 
         if (teamMembersRepository.existsByTeamAndUser(team, user)) {
-            throw new RuntimeException("User is already a member of the team");
+            throw new UserAlreadyMemberOfTeamException();
         }
 
         TeamMembers teamMember = TeamMembers.builder().team(team).user(user).build();

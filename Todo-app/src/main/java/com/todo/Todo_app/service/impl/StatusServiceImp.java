@@ -1,6 +1,7 @@
 package com.todo.Todo_app.service.impl;
 
 import com.todo.Todo_app.dto.StatusDTO;
+import com.todo.Todo_app.exception.StatusNotFoundException;
 import com.todo.Todo_app.model.Status;
 import com.todo.Todo_app.repository.StatusRepository;
 import com.todo.Todo_app.service.StatusService;
@@ -30,9 +31,9 @@ public class StatusServiceImp implements StatusService {
         return statusRepository.findAll();
     }
     @Override
-    public void deleteStatus(UUID id) {
+    public void deleteStatus(UUID id) throws StatusNotFoundException {
         Status status = statusRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Status doesn't exists"));
+                .orElseThrow(StatusNotFoundException::new);
         statusRepository.delete(status);
     }
 }

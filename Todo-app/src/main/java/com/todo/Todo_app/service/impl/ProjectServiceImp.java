@@ -1,6 +1,7 @@
 package com.todo.Todo_app.service.impl;
 
 import com.todo.Todo_app.dto.ProjectDTO;
+import com.todo.Todo_app.exception.ProjectNotFoundException;
 import com.todo.Todo_app.model.Projects;
 import com.todo.Todo_app.model.Users;
 import com.todo.Todo_app.repository.ProjectRepository;
@@ -35,9 +36,9 @@ public class ProjectServiceImp implements ProjectService {
         return projectRepository.findAll();
     }
     @Override
-    public void deleteProject(UUID id) {
+    public void deleteProject(UUID id) throws ProjectNotFoundException {
         Projects projects = projectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Role doesn't exists"));
+                .orElseThrow(ProjectNotFoundException::new);
         projectRepository.delete(projects);
     }
 }
