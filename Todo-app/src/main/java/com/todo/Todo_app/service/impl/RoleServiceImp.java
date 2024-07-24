@@ -5,12 +5,14 @@ import com.todo.Todo_app.exception.RoleNotFoundException;
 import com.todo.Todo_app.model.Roles;
 import com.todo.Todo_app.repository.RoleRepository;
 import com.todo.Todo_app.service.RoleService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class RoleServiceImp implements RoleService {
     private final RoleRepository roleRepository;
 

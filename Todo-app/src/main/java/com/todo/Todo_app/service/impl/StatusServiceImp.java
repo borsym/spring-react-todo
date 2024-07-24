@@ -5,12 +5,14 @@ import com.todo.Todo_app.exception.StatusNotFoundException;
 import com.todo.Todo_app.model.Status;
 import com.todo.Todo_app.repository.StatusRepository;
 import com.todo.Todo_app.service.StatusService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class StatusServiceImp implements StatusService {
     private final StatusRepository statusRepository;
 

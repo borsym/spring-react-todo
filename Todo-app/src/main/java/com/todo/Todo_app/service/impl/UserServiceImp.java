@@ -6,6 +6,7 @@ import com.todo.Todo_app.exception.UserAlreadyExistsException;
 import com.todo.Todo_app.model.Users;
 import com.todo.Todo_app.repository.UserRepository;
 import com.todo.Todo_app.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class UserServiceImp implements UserService {
 
     private final UserRepository userRepository;

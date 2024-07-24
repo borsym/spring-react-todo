@@ -6,6 +6,7 @@ import com.todo.Todo_app.repository.RoleRepository;
 import com.todo.Todo_app.repository.UserRepository;
 import com.todo.Todo_app.repository.UserRoleRepository;
 import com.todo.Todo_app.service.UserRoleService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.UUID;
 import static com.todo.Todo_app.utils.Utils.findOrThrow;
 
 @Service
+@Transactional
 public class UserRoleServiceImp implements UserRoleService {
     private final UserRoleRepository userRoleRepository;
     private final UserRepository userRepository;

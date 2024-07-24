@@ -17,6 +17,7 @@ import java.util.UUID;
 import static com.todo.Todo_app.utils.Utils.findOrThrow;
 
 @Service
+@Transactional
 public class TeamMemberServiceImp implements TeamMemberService {
     private final TeamMemberRepository teamMembersRepository;
     private final TeamRepository teamRepository;
@@ -35,7 +36,6 @@ public class TeamMemberServiceImp implements TeamMemberService {
     }
 
     @Override
-    @Transactional
     public TeamMembers addMemberToTeam(UUID teamId, UUID userId) throws UserAlreadyMemberOfTeamException {
         Teams team = findOrThrow(teamRepository, teamId, "Teams");
         Users user = findOrThrow(userRepository, userId, "Users");

@@ -4,12 +4,14 @@ import com.todo.Todo_app.dto.PriorityDTO;
 import com.todo.Todo_app.model.Priorities;
 import com.todo.Todo_app.repository.PriorityRepository;
 import com.todo.Todo_app.service.PriorityService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class PriorityServiceImp implements PriorityService {
     private final PriorityRepository priorityRepository;
 

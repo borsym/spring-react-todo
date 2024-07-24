@@ -4,6 +4,7 @@ import com.todo.Todo_app.dto.TaskDTO;
 import com.todo.Todo_app.model.*;
 import com.todo.Todo_app.repository.*;
 import com.todo.Todo_app.service.TaskService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.util.UUID;
 import static com.todo.Todo_app.utils.Utils.findOrThrow;
 
 @Service
+@Transactional
 public class TaskServiceImp implements TaskService {
     private final TaskRepository taskRepository;
     private final ProjectRepository projectRepository;

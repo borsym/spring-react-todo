@@ -6,12 +6,14 @@ import com.todo.Todo_app.model.Projects;
 import com.todo.Todo_app.model.Users;
 import com.todo.Todo_app.repository.ProjectRepository;
 import com.todo.Todo_app.service.ProjectService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class ProjectServiceImp implements ProjectService {
     private final ProjectRepository projectRepository;
 

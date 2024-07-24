@@ -5,6 +5,7 @@ import com.todo.Todo_app.model.Teams;
 import com.todo.Todo_app.model.Users;
 import com.todo.Todo_app.repository.TeamRepository;
 import com.todo.Todo_app.service.TeamService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.util.UUID;
 import static com.todo.Todo_app.utils.Utils.findOrThrow;
 
 @Service
+@Transactional
 public class TeamServiceImp implements TeamService {
 
     private final TeamRepository teamRepository;
