@@ -1,5 +1,6 @@
 package com.todo.Todo_app.service.impl;
 
+import com.todo.Todo_app.api.exception.EntityNotFoundException;
 import com.todo.Todo_app.dto.PriorityDTO;
 import com.todo.Todo_app.model.PrioritiesEntity;
 import com.todo.Todo_app.repository.PriorityRepository;
@@ -21,7 +22,7 @@ public class PriorityServiceImp implements PriorityService {
     @Override
     public PrioritiesEntity createPriority(PriorityDTO priorityDTO) {
         val priorityName = priorityDTO.getPriorityName();
-        priorityRepository.findByPriorityName(priorityName).orElseThrow(() -> new RuntimeException("Priorities name doesn't exists"));
+        priorityRepository.findByPriorityName(priorityName).orElseThrow(() -> new EntityNotFoundException("Priorities"));
         PrioritiesEntity priorities = PrioritiesEntity.builder().priorityName(priorityName).build();
         return priorityRepository.save(priorities);
     }
@@ -33,7 +34,7 @@ public class PriorityServiceImp implements PriorityService {
 
     @Override
     public void deletePriority(UUID id) {
-        PrioritiesEntity priorities = priorityRepository.findById(id).orElseThrow(() -> new RuntimeException("Priorities doesn't exists"));
+        PrioritiesEntity priorities = priorityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Priorities"));
         priorityRepository.delete(priorities);
     }
 }

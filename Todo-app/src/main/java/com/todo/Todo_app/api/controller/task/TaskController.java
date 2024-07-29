@@ -6,6 +6,7 @@ import com.todo.Todo_app.model.TasksEntity;
 import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.service.impl.TaskServiceImp;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +19,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/tasks")
 @Slf4j
+@RequiredArgsConstructor
 public class TaskController {
     private final TaskServiceImp taskService;
-
-    public TaskController(TaskServiceImp taskService) {
-        this.taskService = taskService;
-    }
 
     @GetMapping
     public List<TasksEntity> getAllTasks() {
@@ -42,36 +40,24 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createTask(@Valid @RequestBody TaskDTO taskDTO, @AuthenticationPrincipal UsersEntity user) {
-        try {
-            TasksEntity newTask = taskService.createTask(taskDTO, user);
-            return ResponseEntity.status(HttpStatus.CREATED).body(newTask);
-        } catch (Exception ex) {
-            log.error("Error occurred while creating task with details: {}", taskDTO, ex);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while creating the task");
-        }
+    public ResponseEntity<TasksEntity> createTask(@Valid @RequestBody TaskDTO taskDTO, @AuthenticationPrincipal UsersEntity user) {
+        TasksEntity newTask = taskService.createTask(taskDTO, user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newTask);
+
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateTask(@PathVariable UUID id, @RequestBody TaskDTO taskDTO) {
-        try {
-            TasksEntity updateTask = taskService.updateTask(id, taskDTO);
-            return ResponseEntity.ok(updateTask);
-        } catch (Exception ex) {
-            log.error("Error occurred while updating task for ID: {} with details: {}", id, taskDTO, ex);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating the task");
-        }
+    public ResponseEntity<TasksEntity> updateTask(@PathVariable UUID id, @RequestBody TaskDTO taskDTO) {
+        TasksEntity updateTask = taskService.updateTask(id, taskDTO);
+        return ResponseEntity.ok(updateTask);
+
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteTask(@PathVariable UUID id) {
-        try {
-            taskService.deleteTask(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // 204 No Content
-        } catch (Exception ex) {
-            log.error("Error occurred while deleting task for ID: {}", id, ex);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-        }
+    public ResponseEntity<Void> deleteTask(@PathVariable UUID id) {
+        taskService.deleteTask(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // 204 No Content
+
     }
 
 }

@@ -1,8 +1,8 @@
 package com.todo.Todo_app.service.impl;
 
+import com.todo.Todo_app.api.exception.UserAlreadyExistsException;
 import com.todo.Todo_app.dto.LoginDTO;
 import com.todo.Todo_app.dto.RegistrationDTO;
-import com.todo.Todo_app.exception.UserAlreadyExistsException;
 import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.repository.UserRepository;
 import com.todo.Todo_app.service.UserService;
@@ -27,12 +27,19 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UsersEntity registerUser(RegistrationDTO registrationBody) throws UserAlreadyExistsException {
-        userRepository.findByEmail(registrationBody.getEmail()).orElseThrow(UserAlreadyExistsException::new);
-        userRepository.findByUsername(registrationBody.getUsername()).orElseThrow(UserAlreadyExistsException::new);
+        userRepository.findByEmail(registrationBody.getEmail()).ifPresent(user -> {
+            throw new UserAlreadyExistsException("User Already exists");
+        });
+
+        userRepository.findByUsername(registrationBody.getUsername()).ifPresent(user -> {
+            throw new UserAlreadyExistsException("User Already exists");
+        });
+
         UsersEntity user = UsersEntity.builder().email(registrationBody.getEmail()).username(registrationBody.getUsername()).password(encryptionService.encryptPassword(registrationBody.getPassword())).build();
 
         return userRepository.save(user);
     }
+
     @Override
     public String loginUser(LoginDTO loginBody) {
         Optional<UsersEntity> optUser = userRepository.findByUsername(loginBody.getUsername());
@@ -45,10 +52,12 @@ public class UserServiceImp implements UserService {
 
         return null;
     }
+
     @Override
     public List<UsersEntity> getAllUsers() {
         return userRepository.findAll();
     }
+
     @Override
     public Optional<UsersEntity> getUserById(UUID id) {
         return userRepository.findById(id);

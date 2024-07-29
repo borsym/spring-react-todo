@@ -2,7 +2,7 @@ package com.todo.Todo_app.service;
 
 import com.todo.Todo_app.dto.LoginDTO;
 import com.todo.Todo_app.dto.RegistrationDTO;
-import com.todo.Todo_app.exception.UserAlreadyExistsException;
+import com.todo.Todo_app.api.exception.UserAlreadyExistsException;
 import com.todo.Todo_app.model.UsersEntity;
 
 

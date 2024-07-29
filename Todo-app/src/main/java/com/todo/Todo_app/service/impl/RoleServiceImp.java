@@ -1,7 +1,7 @@
 package com.todo.Todo_app.service.impl;
 
+import com.todo.Todo_app.api.exception.EntityNotFoundException;
 import com.todo.Todo_app.dto.RolesDTO;
-import com.todo.Todo_app.exception.RoleNotFoundException;
 import com.todo.Todo_app.model.RolesEntity;
 import com.todo.Todo_app.repository.RoleRepository;
 import com.todo.Todo_app.service.RoleService;
@@ -33,9 +33,9 @@ public class RoleServiceImp implements RoleService {
         return roleRepository.findAll();
     }
     @Override
-    public void deleteRole(UUID id) throws RoleNotFoundException {
+    public void deleteRole(UUID id)  {
         RolesEntity role = roleRepository.findById(id)
-                .orElseThrow(RoleNotFoundException::new);
+                .orElseThrow(() -> new EntityNotFoundException("Role"));
         roleRepository.delete(role);
     }
 }

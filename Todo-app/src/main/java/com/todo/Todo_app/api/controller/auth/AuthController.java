@@ -5,6 +5,7 @@ import com.todo.Todo_app.dto.LoginResponse;
 import com.todo.Todo_app.dto.RegistrationDTO;
 import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.service.impl.UserServiceImp;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,23 +15,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/auth")
 @Slf4j
+@RequiredArgsConstructor
 public class AuthController {
     private final UserServiceImp userService;
-
-    public AuthController(UserServiceImp userService) {
-        this.userService = userService;
-    }
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegistrationDTO registrationBody) {
         log.info("Register request received for email: {}", registrationBody.getEmail());
-        try {
-            UsersEntity user = userService.registerUser(registrationBody);
-            return ResponseEntity.status(HttpStatus.CREATED).body(user);
-        } catch (Exception ex) {
-            log.error("Error registering user with email: {}", registrationBody.getEmail(), ex);
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
+        UsersEntity user = userService.registerUser(registrationBody);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
     @PostMapping("/login")

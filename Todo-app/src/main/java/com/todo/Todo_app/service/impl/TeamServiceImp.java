@@ -1,5 +1,6 @@
 package com.todo.Todo_app.service.impl;
 
+import com.todo.Todo_app.api.exception.EntityNotFoundException;
 import com.todo.Todo_app.dto.TeamDTO;
 import com.todo.Todo_app.model.TeamsEntity;
 import com.todo.Todo_app.model.UsersEntity;
@@ -40,7 +41,7 @@ public class TeamServiceImp implements TeamService {
     }
     @Override
     public TeamsEntity updateTeam(UUID id, TeamDTO teamDTO) {
-        TeamsEntity team = findOrThrow(teamRepository, id, "Teams");
+        TeamsEntity team = teamRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Team"));
         if (teamDTO.getName() != null) {
             team.setName(teamDTO.getName());
         }
@@ -48,7 +49,7 @@ public class TeamServiceImp implements TeamService {
     }
     @Override
     public void deleteTeam(UUID id) {
-        TeamsEntity team = findOrThrow(teamRepository, id, "Teams");
+        TeamsEntity team = teamRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Team"));
         teamRepository.delete(team);
     }
 }

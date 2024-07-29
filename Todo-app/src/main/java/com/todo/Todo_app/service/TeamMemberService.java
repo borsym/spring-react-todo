@@ -1,6 +1,5 @@
 package com.todo.Todo_app.service;
 
-import com.todo.Todo_app.exception.UserAlreadyMemberOfTeamException;
 import com.todo.Todo_app.model.TeamMembersEntity;
 
 import java.util.List;

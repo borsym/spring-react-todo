@@ -1,7 +1,8 @@
 package com.todo.Todo_app.service.impl;
 
+import com.todo.Todo_app.api.exception.EntityAlreadyExistsException;
+import com.todo.Todo_app.api.exception.EntityNotFoundException;
 import com.todo.Todo_app.dto.StatusDTO;
-import com.todo.Todo_app.exception.StatusNotFoundException;
 import com.todo.Todo_app.model.StatusEntity;
 import com.todo.Todo_app.repository.StatusRepository;
 import com.todo.Todo_app.service.StatusService;
@@ -23,7 +24,7 @@ public class StatusServiceImp implements StatusService {
     public StatusEntity createStatus(StatusDTO statusDTO) {
         val statusName = statusDTO.getStatusName();
         if (statusRepository.findBystatusName(statusName)) {
-            throw new RuntimeException("Role already exists");
+            throw new EntityAlreadyExistsException("Role");
         }
         StatusEntity status = StatusEntity.builder().statusName(statusName).build();
         return statusRepository.save(status);
@@ -33,9 +34,9 @@ public class StatusServiceImp implements StatusService {
         return statusRepository.findAll();
     }
     @Override
-    public void deleteStatus(UUID id) throws StatusNotFoundException {
+    public void deleteStatus(UUID id)  {
         StatusEntity status = statusRepository.findById(id)
-                .orElseThrow(StatusNotFoundException::new);
+                .orElseThrow(() -> new EntityNotFoundException("Status"));
         statusRepository.delete(status);
     }
 }

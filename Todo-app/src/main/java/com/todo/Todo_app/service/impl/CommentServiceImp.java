@@ -1,6 +1,7 @@
 package com.todo.Todo_app.service.impl;
 
 
+import com.todo.Todo_app.api.exception.EntityNotFoundException;
 import com.todo.Todo_app.dto.CommentDTO;
 import com.todo.Todo_app.model.CommentsEntity;
 import com.todo.Todo_app.model.TasksEntity;
@@ -15,8 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
-import static com.todo.Todo_app.utils.Utils.findOrThrow;
-
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -27,7 +26,7 @@ public class CommentServiceImp implements CommentService {
     // TODO not good
     @Override
     public CommentsEntity createComment(UUID id, CommentDTO commentDTO, UsersEntity user) {
-        TasksEntity task = findOrThrow(taskRepository, id, "Tasks");
+        TasksEntity task = taskRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Task"));
 
         CommentsEntity comment = CommentsEntity.builder()
                 .task(task)
@@ -42,14 +41,16 @@ public class CommentServiceImp implements CommentService {
 
         return comment;
     }
+
     @Override
     public List<CommentsEntity> getCommentsByTaskId(UUID id) {
-        TasksEntity task = findOrThrow(taskRepository, id, "Tasks");
+        TasksEntity task = taskRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Task"));
         return commentRepository.findByTask(task);
     }
+
     @Override
     public void deleteComment(UUID id) {
-        CommentsEntity comments = findOrThrow(commentRepository, id, "Comments");
+        CommentsEntity comments = commentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Comment"));
         commentRepository.delete(comments);
     }
 }

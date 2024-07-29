@@ -1,7 +1,7 @@
 package com.todo.Todo_app.service.impl;
 
+import com.todo.Todo_app.api.exception.EntityNotFoundException;
 import com.todo.Todo_app.dto.ProjectDTO;
-import com.todo.Todo_app.exception.ProjectNotFoundException;
 import com.todo.Todo_app.model.ProjectsEntity;
 import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.repository.ProjectRepository;
@@ -23,7 +23,6 @@ public class ProjectServiceImp implements ProjectService {
     @Override
     public ProjectsEntity createProject(ProjectDTO projectsDTO, UsersEntity user) {
         val projectName = projectsDTO.getName();
-        projectRepository.findByName(projectName).orElseThrow(() -> new RuntimeException("Project already exists"));
         ProjectsEntity project = ProjectsEntity.builder()
                 .name(projectName)
                 .description(projectsDTO.getDescription())
@@ -36,9 +35,9 @@ public class ProjectServiceImp implements ProjectService {
         return projectRepository.findAll();
     }
     @Override
-    public void deleteProject(UUID id) throws ProjectNotFoundException {
+    public void deleteProject(UUID id) {
         ProjectsEntity projects = projectRepository.findById(id)
-                .orElseThrow(ProjectNotFoundException::new);
+                .orElseThrow(() -> new EntityNotFoundException("Project"));
         projectRepository.delete(projects);
     }
 }

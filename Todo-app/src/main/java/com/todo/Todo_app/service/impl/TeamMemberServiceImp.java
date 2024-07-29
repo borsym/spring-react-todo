@@ -1,6 +1,7 @@
 package com.todo.Todo_app.service.impl;
 
-import com.todo.Todo_app.exception.UserAlreadyMemberOfTeamException;
+import com.todo.Todo_app.api.exception.EntityAlreadyExistsException;
+import com.todo.Todo_app.api.exception.EntityNotFoundException;
 import com.todo.Todo_app.model.TeamMembersEntity;
 import com.todo.Todo_app.model.TeamsEntity;
 import com.todo.Todo_app.model.UsersEntity;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
-import static com.todo.Todo_app.utils.Utils.findOrThrow;
 
 @Service
 @Transactional
@@ -32,12 +32,12 @@ public class TeamMemberServiceImp implements TeamMemberService {
     }
 
     @Override
-    public TeamMembersEntity addMemberToTeam(UUID teamId, UUID userId) throws UserAlreadyMemberOfTeamException {
-        TeamsEntity team = findOrThrow(teamRepository, teamId, "Teams");
-        UsersEntity user = findOrThrow(userRepository, userId, "Users");
+    public TeamMembersEntity addMemberToTeam(UUID teamId, UUID userId)  {
+        TeamsEntity team = teamRepository.findById(teamId).orElseThrow(() -> new EntityNotFoundException("Team"));
+        UsersEntity user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User"));
 
         if (teamMembersRepository.existsByTeamAndUser(team, user)) {
-            throw new UserAlreadyMemberOfTeamException();
+            throw new EntityAlreadyExistsException("Team and user");
         }
 
         TeamMembersEntity teamMember = TeamMembersEntity.builder().team(team).user(user).build();
@@ -47,9 +47,9 @@ public class TeamMemberServiceImp implements TeamMemberService {
 
     @Override
     public void deleteTeamMember(UUID teamId, UUID userId) {
-        TeamsEntity team = findOrThrow(teamRepository, teamId, "Teams");
-        UsersEntity user = findOrThrow(userRepository, userId, "Users");
-        TeamMembersEntity teamMember = teamMembersRepository.findByTeamAndUser(team, user).orElseThrow(() -> new RuntimeException("Team member not found"));
+        TeamsEntity team = teamRepository.findById(teamId).orElseThrow(() -> new EntityNotFoundException("Team"));
+        UsersEntity user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User"));
+        TeamMembersEntity teamMember = teamMembersRepository.findByTeamAndUser(team, user).orElseThrow(() -> new EntityNotFoundException("Team member"));
         teamMembersRepository.delete(teamMember);
     }
 
