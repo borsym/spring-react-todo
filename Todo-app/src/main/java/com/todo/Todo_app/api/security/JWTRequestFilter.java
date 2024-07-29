@@ -37,7 +37,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
             try {
                 String username = jwtService.getUsername(token);
                 Optional<UsersEntity> opUser = userRepository.findByUsername(username);
-                if (opUser.isPresent()) {
+                if (opUser.isEmpty()) {
                     UsersEntity user = opUser.get();
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, new ArrayList());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

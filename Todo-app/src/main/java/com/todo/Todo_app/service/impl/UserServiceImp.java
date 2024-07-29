@@ -27,9 +27,8 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UsersEntity registerUser(RegistrationDTO registrationBody) throws UserAlreadyExistsException {
-        if (userRepository.findByEmail(registrationBody.getEmail()).isPresent() || userRepository.findByUsername(registrationBody.getUsername()).isPresent()) {
-            throw new UserAlreadyExistsException();
-        }
+        userRepository.findByEmail(registrationBody.getEmail()).orElseThrow(UserAlreadyExistsException::new);
+        userRepository.findByUsername(registrationBody.getUsername()).orElseThrow(UserAlreadyExistsException::new);
         UsersEntity user = UsersEntity.builder().email(registrationBody.getEmail()).username(registrationBody.getUsername()).password(encryptionService.encryptPassword(registrationBody.getPassword())).build();
 
         return userRepository.save(user);

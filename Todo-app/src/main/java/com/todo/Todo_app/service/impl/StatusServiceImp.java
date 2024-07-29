@@ -7,6 +7,7 @@ import com.todo.Todo_app.repository.StatusRepository;
 import com.todo.Todo_app.service.StatusService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class StatusServiceImp implements StatusService {
 
     @Override
     public StatusEntity createStatus(StatusDTO statusDTO) {
-        var statusName = statusDTO.getStatusName();
+        val statusName = statusDTO.getStatusName();
         if (statusRepository.findBystatusName(statusName)) {
             throw new RuntimeException("Role already exists");
         }

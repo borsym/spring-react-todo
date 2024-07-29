@@ -8,6 +8,7 @@ import com.todo.Todo_app.repository.ProjectRepository;
 import com.todo.Todo_app.service.ProjectService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,10 +22,8 @@ public class ProjectServiceImp implements ProjectService {
 
     @Override
     public ProjectsEntity createProject(ProjectDTO projectsDTO, UsersEntity user) {
-        var projectName = projectsDTO.getName();
-        if (projectRepository.findByName(projectName).isPresent()) {
-            throw new RuntimeException("Project already exists");
-        }
+        val projectName = projectsDTO.getName();
+        projectRepository.findByName(projectName).orElseThrow(() -> new RuntimeException("Project already exists"));
         ProjectsEntity project = ProjectsEntity.builder()
                 .name(projectName)
                 .description(projectsDTO.getDescription())

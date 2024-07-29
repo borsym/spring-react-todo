@@ -6,6 +6,7 @@ import com.todo.Todo_app.repository.PriorityRepository;
 import com.todo.Todo_app.service.PriorityService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,21 +20,20 @@ public class PriorityServiceImp implements PriorityService {
 
     @Override
     public PrioritiesEntity createPriority(PriorityDTO priorityDTO) {
-        var priorityName = priorityDTO.getPriorityName();
-        if (priorityRepository.findByPriorityName(priorityName).isPresent()) {
-            throw new RuntimeException("Priority already exists");
-        }
+        val priorityName = priorityDTO.getPriorityName();
+        priorityRepository.findByPriorityName(priorityName).orElseThrow(() -> new RuntimeException("Priorities name doesn't exists"));
         PrioritiesEntity priorities = PrioritiesEntity.builder().priorityName(priorityName).build();
         return priorityRepository.save(priorities);
     }
+
     @Override
     public List<PrioritiesEntity> getAllPriority() {
         return priorityRepository.findAll();
     }
+
     @Override
     public void deletePriority(UUID id) {
-        PrioritiesEntity priorities = priorityRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Priorities doesn't exists"));
+        PrioritiesEntity priorities = priorityRepository.findById(id).orElseThrow(() -> new RuntimeException("Priorities doesn't exists"));
         priorityRepository.delete(priorities);
     }
 }
