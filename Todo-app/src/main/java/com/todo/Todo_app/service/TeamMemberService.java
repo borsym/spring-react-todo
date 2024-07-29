@@ -7,6 +7,6 @@ import java.util.UUID;
 
 public interface TeamMemberService {
     List<TeamMembersEntity> getAllTeamMembers();
-    TeamMembersEntity addMemberToTeam(UUID teamId, UUID userId) throws UserAlreadyMemberOfTeamException;
+    TeamMembersEntity addMemberToTeam(UUID teamId, UUID userId);
     void deleteTeamMember(UUID teamId, UUID userId);
 }
