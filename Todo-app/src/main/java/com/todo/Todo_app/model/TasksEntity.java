@@ -12,17 +12,18 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder(toBuilder = true)
 @Table(name = "task")
-public class TasksEntity {
+public class TasksEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, unique = true)
     private UUID id;
-
+    @Column
     private String title;
+    @Column
     private String description;
     @ManyToOne
     @JoinColumn(name = "project_id")
@@ -44,6 +45,4 @@ public class TasksEntity {
     @JsonManagedReference
     private List<CommentsEntity> comments = new ArrayList<>();
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 }

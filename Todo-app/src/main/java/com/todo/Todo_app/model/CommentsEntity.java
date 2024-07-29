@@ -3,6 +3,7 @@ package com.todo.Todo_app.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -32,6 +33,7 @@ public class CommentsEntity {
     @Column(name = "comment_text")
     private String commentText;
 
-    @Column(name = "created_at")
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false )
     private LocalDateTime createdAt;
 }

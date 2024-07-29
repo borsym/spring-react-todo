@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "teams")
-public class TeamsEntity {
+public class TeamsEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, unique = true)
@@ -25,8 +25,5 @@ public class TeamsEntity {
     @ManyToOne
     @JoinColumn(name = "created_by")
     private UsersEntity createdBy;
-
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
 }

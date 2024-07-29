@@ -8,7 +8,6 @@ import com.todo.Todo_app.service.TeamService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -35,7 +34,10 @@ public class TeamServiceImp implements TeamService {
     }
     @Override
     public TeamsEntity createTeam(TeamDTO teamDTO, UsersEntity user) {
-        TeamsEntity team = TeamsEntity.builder().createdBy(user).name(teamDTO.getName()).createdAt(LocalDateTime.now()).updatedAt(LocalDateTime.now()).build();
+        TeamsEntity team = TeamsEntity.builder()
+                .createdBy(user)
+                .name(teamDTO.getName())
+                .build();
         return teamRepository.save(team);
     }
     @Override

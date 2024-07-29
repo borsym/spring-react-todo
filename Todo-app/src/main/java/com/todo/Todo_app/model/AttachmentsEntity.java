@@ -3,6 +3,7 @@ package com.todo.Todo_app.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -29,6 +30,8 @@ public class AttachmentsEntity {
     @JoinColumn(name = "uploaded_by")
     private UsersEntity uploadedBy;
 
+    @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
 }

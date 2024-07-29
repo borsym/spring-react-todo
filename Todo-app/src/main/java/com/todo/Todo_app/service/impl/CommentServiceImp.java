@@ -36,12 +36,10 @@ public class CommentServiceImp implements CommentService {
                 .task(task)
                 .commentText(commentDTO.getCommentText())
                 .user(user)
-                .createdAt(LocalDateTime.now())
                 .build();
 
 
         task.getComments().add(comment);
-        // this looks like a bit hacking for me
         commentRepository.save(comment);
         taskRepository.save(task);
 

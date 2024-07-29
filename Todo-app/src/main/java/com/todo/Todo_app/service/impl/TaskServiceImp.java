@@ -7,7 +7,6 @@ import com.todo.Todo_app.service.TaskService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -41,7 +40,11 @@ public class TaskServiceImp implements TaskService {
     }
     @Override
     public TasksEntity createTask(TaskDTO taskDTO, UsersEntity user) {
-        TasksEntity.TasksBuilder taskBuilder = TasksEntity.builder().title(taskDTO.getTitle()).description(taskDTO.getDescription()).project(findOrThrow(projectRepository, taskDTO.getProjectId(), "Projects")).createdBy(user).updatedAt(LocalDateTime.now()).createdAt(LocalDateTime.now());
+        TasksEntity.TasksEntityBuilder taskBuilder = TasksEntity.builder()
+                .title(taskDTO.getTitle())
+                .description(taskDTO.getDescription())
+                .project(findOrThrow(projectRepository, taskDTO.getProjectId(), "Projects"))
+                .createdBy(user);
 
         Optional.ofNullable(taskDTO.getPriority()).map(priorityId -> findOrThrow(priorityRepository, priorityId, "Priorities")).ifPresent(taskBuilder::priority);
 
@@ -55,7 +58,7 @@ public class TaskServiceImp implements TaskService {
     public TasksEntity updateTask(UUID id, TaskDTO taskDTO) {
         TasksEntity existingTask = findOrThrow(taskRepository, id, "Tasks");
 
-        TasksEntity.TasksBuilder taskBuilder = existingTask.toBuilder();
+        TasksEntity.TasksEntityBuilder taskBuilder = existingTask.toBuilder();
 
         Optional.ofNullable(taskDTO.getTitle()).ifPresent(taskBuilder::title);
         Optional.ofNullable(taskDTO.getDescription()).ifPresent(taskBuilder::description);
@@ -75,8 +78,6 @@ public class TaskServiceImp implements TaskService {
         Optional.ofNullable(taskDTO.getStatus())
                 .map(statusId -> findOrThrow(statusRepository, statusId, "Status"))
                 .ifPresent(taskBuilder::status);
-
-        taskBuilder.updatedAt(LocalDateTime.now());
 
         return taskRepository.save(taskBuilder.build());
     }
