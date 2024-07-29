@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserRolesController {
 
-    private UserRoleServiceImp userRoleService;
+    private final UserRoleServiceImp userRoleService;
 
     public UserRolesController(UserRoleServiceImp userRoleService) {
         this.userRoleService = userRoleService;

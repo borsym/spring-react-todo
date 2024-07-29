@@ -21,8 +21,8 @@ import java.util.Optional;
 @Component
 public class JWTRequestFilter extends OncePerRequestFilter {
 
-    private JWTServiceImp jwtService;
-    private UserRepository userRepository;
+    private final JWTServiceImp jwtService;
+    private final UserRepository userRepository;
 
     public JWTRequestFilter(JWTServiceImp jwtService, UserRepository userRepository) {
         this.jwtService = jwtService;

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/priorities")
+@RequestMapping("/api/priorities")
 @Slf4j
 public class PriorityController {
     private final PriorityServiceImp priorityService;

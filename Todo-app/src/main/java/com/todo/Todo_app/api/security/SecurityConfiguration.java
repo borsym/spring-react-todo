@@ -12,7 +12,7 @@ import org.springframework.security.web.access.intercept.AuthorizationFilter;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    private JWTRequestFilter jwtRequestFilter;
+    private final JWTRequestFilter jwtRequestFilter;
 
     public SecurityConfiguration(JWTRequestFilter jwtRequestFilter) {
         this.jwtRequestFilter = jwtRequestFilter;

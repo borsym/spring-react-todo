@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/projects")
+@RequestMapping("/api/projects")
 @Slf4j
 public class ProjectController {
     private final ProjectServiceImp projectService;

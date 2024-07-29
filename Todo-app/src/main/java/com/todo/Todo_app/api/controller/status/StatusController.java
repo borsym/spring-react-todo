@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/status")
+@RequestMapping("/api/status")
 @Slf4j
 public class StatusController {
     private final StatusServiceImp statusService;

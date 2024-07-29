@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/comments")
+@RequestMapping("/api/comments")
 @Slf4j
 public class CommentController {
 

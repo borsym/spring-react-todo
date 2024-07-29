@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/roles")
+@RequestMapping("/api/roles")
 @Slf4j
 public class RoleController {
     private final RoleServiceImp roleService;

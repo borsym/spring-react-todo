@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/tasks")
+@RequestMapping("/api/tasks")
 @Slf4j
 public class TaskController {
     private final TaskServiceImp taskService;

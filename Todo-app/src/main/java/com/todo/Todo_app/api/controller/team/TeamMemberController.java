@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/teams/members")
+@RequestMapping("/api/teams/members")
 public class TeamMemberController {
     private final TeamMemberServiceImp teamMembersService;
 
