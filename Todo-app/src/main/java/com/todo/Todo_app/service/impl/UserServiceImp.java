@@ -7,6 +7,7 @@ import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.repository.UserRepository;
 import com.todo.Todo_app.service.UserService;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserServiceImp implements UserService {
 
     private final UserRepository userRepository;
@@ -22,12 +24,6 @@ public class UserServiceImp implements UserService {
     private final EncryptionServiceImp encryptionService;
     private final JWTServiceImp jwtService;
 
-
-    public UserServiceImp(UserRepository userRepository, EncryptionServiceImp encryptionService, JWTServiceImp jwtService) {
-        this.userRepository = userRepository;
-        this.encryptionService = encryptionService;
-        this.jwtService = jwtService;
-    }
 
     @Override
     public UsersEntity registerUser(RegistrationDTO registrationBody) throws UserAlreadyExistsException {

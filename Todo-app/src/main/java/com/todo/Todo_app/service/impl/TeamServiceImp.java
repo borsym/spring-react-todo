@@ -6,6 +6,7 @@ import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.repository.TeamRepository;
 import com.todo.Todo_app.service.TeamService;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,13 +17,10 @@ import static com.todo.Todo_app.utils.Utils.findOrThrow;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class TeamServiceImp implements TeamService {
 
     private final TeamRepository teamRepository;
-
-    public TeamServiceImp(TeamRepository teamRepository) {
-        this.teamRepository = teamRepository;
-    }
 
     @Override
     public List<TeamsEntity> getAllTeams() {

@@ -5,6 +5,7 @@ import com.todo.Todo_app.model.*;
 import com.todo.Todo_app.repository.*;
 import com.todo.Todo_app.service.TaskService;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,20 +16,13 @@ import static com.todo.Todo_app.utils.Utils.findOrThrow;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class TaskServiceImp implements TaskService {
     private final TaskRepository taskRepository;
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
     private final PriorityRepository priorityRepository;
     private final StatusRepository statusRepository;
-
-    public TaskServiceImp(TaskRepository taskRepository, ProjectRepository projectRepository, UserRepository userRepository, PriorityRepository priorityRepository, StatusRepository statusRepository) {
-        this.taskRepository = taskRepository;
-        this.projectRepository = projectRepository;
-        this.userRepository = userRepository;
-        this.priorityRepository = priorityRepository;
-        this.statusRepository = statusRepository;
-    }
 
     @Override
     public List<TasksEntity> getAllTasks() {

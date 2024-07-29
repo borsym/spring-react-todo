@@ -5,6 +5,7 @@ import com.todo.Todo_app.model.PrioritiesEntity;
 import com.todo.Todo_app.repository.PriorityRepository;
 import com.todo.Todo_app.service.PriorityService;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,12 +13,10 @@ import java.util.UUID;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class PriorityServiceImp implements PriorityService {
     private final PriorityRepository priorityRepository;
 
-    public PriorityServiceImp(PriorityRepository priorityRepository) {
-        this.priorityRepository = priorityRepository;
-    }
     @Override
     public PrioritiesEntity createPriority(PriorityDTO priorityDTO) {
         var priorityName = priorityDTO.getPriorityName();

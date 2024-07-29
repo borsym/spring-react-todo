@@ -7,6 +7,7 @@ import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.repository.ProjectRepository;
 import com.todo.Todo_app.service.ProjectService;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,12 +15,10 @@ import java.util.UUID;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ProjectServiceImp implements ProjectService {
     private final ProjectRepository projectRepository;
 
-    public ProjectServiceImp(ProjectRepository projectRepository) {
-        this.projectRepository = projectRepository;
-    }
     @Override
     public ProjectsEntity createProject(ProjectDTO projectsDTO, UsersEntity user) {
         var projectName = projectsDTO.getName();

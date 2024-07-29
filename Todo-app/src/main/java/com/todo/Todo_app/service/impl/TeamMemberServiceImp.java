@@ -9,6 +9,7 @@ import com.todo.Todo_app.repository.TeamRepository;
 import com.todo.Todo_app.repository.UserRepository;
 import com.todo.Todo_app.service.TeamMemberService;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,17 +19,12 @@ import static com.todo.Todo_app.utils.Utils.findOrThrow;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class TeamMemberServiceImp implements TeamMemberService {
     private final TeamMemberRepository teamMembersRepository;
     private final TeamRepository teamRepository;
     private final UserRepository userRepository;
 
-
-    public TeamMemberServiceImp(TeamMemberRepository teamMembersRepository, TeamRepository teamRepository, UserRepository userRepository) {
-        this.teamMembersRepository = teamMembersRepository;
-        this.teamRepository = teamRepository;
-        this.userRepository = userRepository;
-    }
 
     @Override
     public List<TeamMembersEntity> getAllTeamMembers() {

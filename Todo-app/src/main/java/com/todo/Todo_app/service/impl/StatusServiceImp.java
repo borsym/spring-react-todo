@@ -6,6 +6,7 @@ import com.todo.Todo_app.model.StatusEntity;
 import com.todo.Todo_app.repository.StatusRepository;
 import com.todo.Todo_app.service.StatusService;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,12 +14,10 @@ import java.util.UUID;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class StatusServiceImp implements StatusService {
     private final StatusRepository statusRepository;
 
-    public StatusServiceImp(StatusRepository statusRepository) {
-        this.statusRepository = statusRepository;
-    }
     @Override
     public StatusEntity createStatus(StatusDTO statusDTO) {
         var statusName = statusDTO.getStatusName();

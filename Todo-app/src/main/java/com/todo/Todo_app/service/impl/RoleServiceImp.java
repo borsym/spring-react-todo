@@ -6,6 +6,7 @@ import com.todo.Todo_app.model.RolesEntity;
 import com.todo.Todo_app.repository.RoleRepository;
 import com.todo.Todo_app.service.RoleService;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,12 +14,10 @@ import java.util.UUID;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class RoleServiceImp implements RoleService {
     private final RoleRepository roleRepository;
 
-    public RoleServiceImp(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
     @Override
     public RolesEntity createRole(RolesDTO rolesDTO) {
         var roleName = rolesDTO.getRoleName();

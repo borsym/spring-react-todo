@@ -7,6 +7,7 @@ import com.todo.Todo_app.repository.UserRepository;
 import com.todo.Todo_app.repository.UserRoleRepository;
 import com.todo.Todo_app.service.UserRoleService;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,16 +17,12 @@ import static com.todo.Todo_app.utils.Utils.findOrThrow;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserRoleServiceImp implements UserRoleService {
     private final UserRoleRepository userRoleRepository;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
-    public UserRoleServiceImp(UserRoleRepository userRoleRepository, UserRepository userRepository, RoleRepository roleRepository) {
-        this.userRoleRepository = userRoleRepository;
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-    }
     @Override
     public UserRolesEntity addRoleToUser(UUID userId, UUID roleId) {
         UsersEntity user = findOrThrow(userRepository, userId, "Users");

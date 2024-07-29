@@ -9,9 +9,9 @@ import com.todo.Todo_app.repository.CommentRepository;
 import com.todo.Todo_app.repository.TaskRepository;
 import com.todo.Todo_app.service.CommentService;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,13 +19,10 @@ import static com.todo.Todo_app.utils.Utils.findOrThrow;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class CommentServiceImp implements CommentService {
     private final CommentRepository commentRepository;
     private final TaskRepository taskRepository;
-    public CommentServiceImp(CommentRepository commentRepository, TaskRepository taskRepository) {
-        this.commentRepository = commentRepository;
-        this.taskRepository = taskRepository;
-    }
 
     // TODO not good
     @Override
