@@ -1,8 +1,8 @@
 package com.todo.Todo_app.api.controller.project;
 
 import com.todo.Todo_app.dto.ProjectDTO;
-import com.todo.Todo_app.model.Projects;
-import com.todo.Todo_app.model.Users;
+import com.todo.Todo_app.model.ProjectsEntity;
+import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.service.impl.ProjectServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,14 +24,14 @@ public class ProjectController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Projects>> getAllProjects() {
+    public ResponseEntity<List<ProjectsEntity>> getAllProjects() {
         return ResponseEntity.ok(projectService.getAllProjects());
     }
 
     @PostMapping
-    public ResponseEntity<?> createProject(@RequestBody ProjectDTO projectDTO, @AuthenticationPrincipal Users user) {
+    public ResponseEntity<?> createProject(@RequestBody ProjectDTO projectDTO, @AuthenticationPrincipal UsersEntity user) {
         try {
-            Projects projects = projectService.createProject(projectDTO, user);
+            ProjectsEntity projects = projectService.createProject(projectDTO, user);
             return ResponseEntity.status(HttpStatus.CREATED).body(projects);
         } catch (Exception ex) {
             log.error("Error occurred while creating project with details: {}", projectDTO, ex);

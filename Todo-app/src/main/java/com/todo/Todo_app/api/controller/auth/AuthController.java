@@ -3,10 +3,9 @@ package com.todo.Todo_app.api.controller.auth;
 import com.todo.Todo_app.dto.LoginDTO;
 import com.todo.Todo_app.dto.LoginResponse;
 import com.todo.Todo_app.dto.RegistrationDTO;
-import com.todo.Todo_app.model.Users;
+import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.service.impl.UserServiceImp;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,7 +25,7 @@ public class AuthController {
     public ResponseEntity<?> registerUser(@RequestBody RegistrationDTO registrationBody) {
         log.info("Register request received for email: {}", registrationBody.getEmail());
         try {
-            Users user = userService.registerUser(registrationBody);
+            UsersEntity user = userService.registerUser(registrationBody);
             return ResponseEntity.status(HttpStatus.CREATED).body(user);
         } catch (Exception ex) {
             log.error("Error registering user with email: {}", registrationBody.getEmail(), ex);
@@ -47,7 +46,7 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public Users getLoggedInUserProfile(@AuthenticationPrincipal Users user) {
+    public UsersEntity getLoggedInUserProfile(@AuthenticationPrincipal UsersEntity user) {
 
         log.info("Fetching profile for user with email: {}", user.getEmail());
 

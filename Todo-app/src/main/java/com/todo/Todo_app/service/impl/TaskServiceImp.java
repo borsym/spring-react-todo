@@ -32,16 +32,16 @@ public class TaskServiceImp implements TaskService {
     }
 
     @Override
-    public List<Tasks> getAllTasks() {
+    public List<TasksEntity> getAllTasks() {
         return taskRepository.findAll();
     }
     @Override
-    public Optional<Tasks> getTaskById(UUID id) {
+    public Optional<TasksEntity> getTaskById(UUID id) {
         return taskRepository.findById(id);
     }
     @Override
-    public Tasks createTask(TaskDTO taskDTO, Users user) {
-        Tasks.TasksBuilder taskBuilder = Tasks.builder().title(taskDTO.getTitle()).description(taskDTO.getDescription()).project(findOrThrow(projectRepository, taskDTO.getProjectId(), "Projects")).createdBy(user).updatedAt(LocalDateTime.now()).createdAt(LocalDateTime.now());
+    public TasksEntity createTask(TaskDTO taskDTO, UsersEntity user) {
+        TasksEntity.TasksBuilder taskBuilder = TasksEntity.builder().title(taskDTO.getTitle()).description(taskDTO.getDescription()).project(findOrThrow(projectRepository, taskDTO.getProjectId(), "Projects")).createdBy(user).updatedAt(LocalDateTime.now()).createdAt(LocalDateTime.now());
 
         Optional.ofNullable(taskDTO.getPriority()).map(priorityId -> findOrThrow(priorityRepository, priorityId, "Priorities")).ifPresent(taskBuilder::priority);
 
@@ -52,10 +52,10 @@ public class TaskServiceImp implements TaskService {
         return taskRepository.save(taskBuilder.build());
     }
     @Override
-    public Tasks updateTask(UUID id, TaskDTO taskDTO) {
-        Tasks existingTask = findOrThrow(taskRepository, id, "Tasks");
+    public TasksEntity updateTask(UUID id, TaskDTO taskDTO) {
+        TasksEntity existingTask = findOrThrow(taskRepository, id, "Tasks");
 
-        Tasks.TasksBuilder taskBuilder = existingTask.toBuilder();
+        TasksEntity.TasksBuilder taskBuilder = existingTask.toBuilder();
 
         Optional.ofNullable(taskDTO.getTitle()).ifPresent(taskBuilder::title);
         Optional.ofNullable(taskDTO.getDescription()).ifPresent(taskBuilder::description);
@@ -82,7 +82,7 @@ public class TaskServiceImp implements TaskService {
     }
     @Override
     public void deleteTask(UUID id) {
-        Tasks task = findOrThrow(taskRepository, id, "Tasks");
+        TasksEntity task = findOrThrow(taskRepository, id, "Tasks");
         taskRepository.delete(task);
     }
 

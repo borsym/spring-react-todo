@@ -1,7 +1,7 @@
 package com.todo.Todo_app.api.controller.status;
 
 import com.todo.Todo_app.dto.StatusDTO;
-import com.todo.Todo_app.model.Status;
+import com.todo.Todo_app.model.StatusEntity;
 import com.todo.Todo_app.service.impl.StatusServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,14 +22,14 @@ public class StatusController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Status>> getAllStatus() {
+    public ResponseEntity<List<StatusEntity>> getAllStatus() {
         return ResponseEntity.ok(statusService.getAllStatus());
     }
 
     @PostMapping
     public ResponseEntity<?> createStatus(@RequestBody StatusDTO statusDTO) {
         try {
-            Status status = statusService.createStatus(statusDTO);
+            StatusEntity status = statusService.createStatus(statusDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(status);
         } catch (Exception ex) {
             log.error("Error occurred while creating status with details: {}", statusDTO, ex);

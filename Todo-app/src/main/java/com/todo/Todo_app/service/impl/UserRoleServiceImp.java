@@ -27,25 +27,25 @@ public class UserRoleServiceImp implements UserRoleService {
         this.roleRepository = roleRepository;
     }
     @Override
-    public UserRoles addRoleToUser(UUID userId, UUID roleId) {
-        Users user = findOrThrow(userRepository, userId, "Users");
-        Roles role = findOrThrow(roleRepository, roleId, "Roles");
+    public UserRolesEntity addRoleToUser(UUID userId, UUID roleId) {
+        UsersEntity user = findOrThrow(userRepository, userId, "Users");
+        RolesEntity role = findOrThrow(roleRepository, roleId, "Roles");
         if(userRoleRepository.existsByRoleAndUser(role,user)) {
             throw new RuntimeException("User with role exists");
         }
-        UserRoles userRole = UserRoles.builder().role(role).user(user).build();
+        UserRolesEntity userRole = UserRolesEntity.builder().role(role).user(user).build();
 
         return  userRoleRepository.save(userRole);
     }
     @Override
-    public List<UserRoles> getAllUsersRoles() {
+    public List<UserRolesEntity> getAllUsersRoles() {
         return userRoleRepository.findAll();
     }
     @Override
     public void deleteRoleToUser(UUID userId, UUID roleId) throws RoleNotFoundException {
-        Roles role = findOrThrow(roleRepository,roleId, "Roles");
-        Users user = findOrThrow(userRepository, userId, "Users");
-        UserRoles userRoles = userRoleRepository.findByRoleAndUser(role, user)
+        RolesEntity role = findOrThrow(roleRepository,roleId, "Roles");
+        UsersEntity user = findOrThrow(userRepository, userId, "Users");
+        UserRolesEntity userRoles = userRoleRepository.findByRoleAndUser(role, user)
                 .orElseThrow(RoleNotFoundException::new);
         System.out.println(userRoles);
         userRoleRepository.delete(userRoles);

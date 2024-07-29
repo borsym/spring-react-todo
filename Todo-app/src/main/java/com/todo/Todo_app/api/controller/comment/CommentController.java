@@ -1,8 +1,8 @@
 package com.todo.Todo_app.api.controller.comment;
 
 import com.todo.Todo_app.dto.CommentDTO;
-import com.todo.Todo_app.model.Comments;
-import com.todo.Todo_app.model.Users;
+import com.todo.Todo_app.model.CommentsEntity;
+import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.service.impl.CommentServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,9 +25,9 @@ public class CommentController {
     }
 
     @PostMapping("/tasks/{id}")
-    public ResponseEntity<?> addComment(@PathVariable UUID id, @RequestBody CommentDTO commentDTO, @AuthenticationPrincipal Users user) {
+    public ResponseEntity<?> addComment(@PathVariable UUID id, @RequestBody CommentDTO commentDTO, @AuthenticationPrincipal UsersEntity user) {
         try{
-            Comments comment = commentService.createComment(id, commentDTO, user);
+            CommentsEntity comment = commentService.createComment(id, commentDTO, user);
             return ResponseEntity.status(HttpStatus.CREATED).body(comment);
         } catch (Exception ex) {
             log.error("Error adding comment for task ID: {} by user: {}", id, user.getEmail(), ex);
@@ -38,7 +38,7 @@ public class CommentController {
     @GetMapping("/tasks/{id}")
     public ResponseEntity<?> getCommentsByTaskId(@PathVariable UUID id) {
         try {
-            List<Comments> comments = commentService.getCommentsByTaskId(id);
+            List<CommentsEntity> comments = commentService.getCommentsByTaskId(id);
             return ResponseEntity.ok(comments);
         }catch(Exception ex) {
             log.error("Error retrieving comments for task ID: {}", id, ex);

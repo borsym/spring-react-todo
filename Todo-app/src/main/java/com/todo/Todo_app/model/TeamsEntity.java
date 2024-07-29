@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -14,7 +12,8 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Teams {
+@Table(name = "teams")
+public class TeamsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, unique = true)
@@ -25,7 +24,7 @@ public class Teams {
 
     @ManyToOne
     @JoinColumn(name = "created_by")
-    private Users createdBy;
+    private UsersEntity createdBy;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

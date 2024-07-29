@@ -11,15 +11,16 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRoles {
+@Table(name = "user_roles")
+public class UserRolesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, unique = true)
     private UUID id;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Users user;
+    private UsersEntity user;
     @ManyToOne
     @JoinColumn(name = "role_id")
-    private Roles role;
+    private RolesEntity role;
 }

@@ -15,7 +15,8 @@ import java.util.UUID;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tasks {
+@Table(name = "task")
+public class TasksEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, unique = true)
@@ -25,23 +26,23 @@ public class Tasks {
     private String description;
     @ManyToOne
     @JoinColumn(name = "project_id")
-    private Projects project;
+    private ProjectsEntity project;
     @ManyToOne
     @JoinColumn(name = "assigned_to")
-    private Users assignedTo;
+    private UsersEntity assignedTo;
     @ManyToOne
     @JoinColumn(name = "priority")
-    private Priorities priority;
+    private PrioritiesEntity priority;
     @ManyToOne
     @JoinColumn(name = "created_by")
-    private Users createdBy;
+    private UsersEntity createdBy;
     @ManyToOne
     @JoinColumn(name = "status")
-    private Status status;
+    private StatusEntity status;
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Comments> comments = new ArrayList<>();
+    private List<CommentsEntity> comments = new ArrayList<>();
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

@@ -1,7 +1,7 @@
 package com.todo.Todo_app.api.security;
 
 import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.todo.Todo_app.model.Users;
+import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.repository.UserRepository;
 import com.todo.Todo_app.service.impl.JWTServiceImp;
 import jakarta.servlet.FilterChain;
@@ -36,9 +36,9 @@ public class JWTRequestFilter extends OncePerRequestFilter {
             String token = tokenHeader.substring(7);
             try {
                 String username = jwtService.getUsername(token);
-                Optional<Users> opUser = userRepository.findByUsername(username);
+                Optional<UsersEntity> opUser = userRepository.findByUsername(username);
                 if (opUser.isPresent()) {
-                    Users user = opUser.get();
+                    UsersEntity user = opUser.get();
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, new ArrayList());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);

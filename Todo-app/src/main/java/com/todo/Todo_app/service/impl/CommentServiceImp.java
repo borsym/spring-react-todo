@@ -2,9 +2,9 @@ package com.todo.Todo_app.service.impl;
 
 
 import com.todo.Todo_app.dto.CommentDTO;
-import com.todo.Todo_app.model.Comments;
-import com.todo.Todo_app.model.Tasks;
-import com.todo.Todo_app.model.Users;
+import com.todo.Todo_app.model.CommentsEntity;
+import com.todo.Todo_app.model.TasksEntity;
+import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.repository.CommentRepository;
 import com.todo.Todo_app.repository.TaskRepository;
 import com.todo.Todo_app.service.CommentService;
@@ -29,10 +29,10 @@ public class CommentServiceImp implements CommentService {
 
     // TODO not good
     @Override
-    public Comments createComment(UUID id, CommentDTO commentDTO, Users user) {
-        Tasks task = findOrThrow(taskRepository, id, "Tasks");
+    public CommentsEntity createComment(UUID id, CommentDTO commentDTO, UsersEntity user) {
+        TasksEntity task = findOrThrow(taskRepository, id, "Tasks");
 
-        Comments comment = Comments.builder()
+        CommentsEntity comment = CommentsEntity.builder()
                 .task(task)
                 .commentText(commentDTO.getCommentText())
                 .user(user)
@@ -48,13 +48,13 @@ public class CommentServiceImp implements CommentService {
         return comment;
     }
     @Override
-    public List<Comments> getCommentsByTaskId(UUID id) {
-        Tasks task = findOrThrow(taskRepository, id, "Tasks");
+    public List<CommentsEntity> getCommentsByTaskId(UUID id) {
+        TasksEntity task = findOrThrow(taskRepository, id, "Tasks");
         return commentRepository.findByTask(task);
     }
     @Override
     public void deleteComment(UUID id) {
-        Comments comments = findOrThrow(commentRepository, id, "Comments");
+        CommentsEntity comments = findOrThrow(commentRepository, id, "Comments");
         commentRepository.delete(comments);
     }
 }

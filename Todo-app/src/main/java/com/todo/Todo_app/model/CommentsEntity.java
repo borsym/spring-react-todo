@@ -1,7 +1,6 @@
 package com.todo.Todo_app.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +13,8 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Comments {
+@Table(name = "comments")
+public class CommentsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, unique = true)
@@ -23,11 +23,11 @@ public class Comments {
     @ManyToOne
     @JoinColumn(name = "task_id")
     @JsonBackReference
-    private Tasks task;
+    private TasksEntity task;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Users user;
+    private UsersEntity user;
 
     @Column(name = "comment_text")
     private String commentText;

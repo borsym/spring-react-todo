@@ -11,7 +11,8 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Projects {
+@Table(name = "projects")
+public class ProjectsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, unique = true)
@@ -22,5 +23,5 @@ public class Projects {
     private String description;
     @ManyToOne
     @JoinColumn(name = "created_by")
-    private Users createdBy;
+    private UsersEntity createdBy;
 }

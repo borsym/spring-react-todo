@@ -1,7 +1,6 @@
 package com.todo.Todo_app.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +10,8 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-public class Attachments {
+@Table(name = "attachments")
+public class AttachmentsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -20,14 +20,14 @@ public class Attachments {
 
     @ManyToOne
     @JoinColumn(name = "task_id")
-    private Tasks task;
+    private TasksEntity task;
 
     @Column(name = "file_path")
     private String filePath;
 
     @ManyToOne
     @JoinColumn(name = "uploaded_by")
-    private Users uploadedBy;
+    private UsersEntity uploadedBy;
 
     private LocalDateTime createdAt;
 

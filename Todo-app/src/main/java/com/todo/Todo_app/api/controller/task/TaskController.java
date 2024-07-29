@@ -2,8 +2,8 @@ package com.todo.Todo_app.api.controller.task;
 
 
 import com.todo.Todo_app.dto.TaskDTO;
-import com.todo.Todo_app.model.Tasks;
-import com.todo.Todo_app.model.Users;
+import com.todo.Todo_app.model.TasksEntity;
+import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.service.impl.TaskServiceImp;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -26,12 +26,12 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<Tasks> getAllTasks() {
+    public List<TasksEntity> getAllTasks() {
         return taskService.getAllTasks();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tasks> getTaskById(@PathVariable UUID id) {
+    public ResponseEntity<TasksEntity> getTaskById(@PathVariable UUID id) {
         return taskService.getTaskById(id).map(task -> {
             log.info("Task with ID {} retrieved successfully", id);
             return ResponseEntity.ok(task);
@@ -42,9 +42,9 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createTask(@Valid @RequestBody TaskDTO taskDTO, @AuthenticationPrincipal Users user) {
+    public ResponseEntity<?> createTask(@Valid @RequestBody TaskDTO taskDTO, @AuthenticationPrincipal UsersEntity user) {
         try {
-            Tasks newTask = taskService.createTask(taskDTO, user);
+            TasksEntity newTask = taskService.createTask(taskDTO, user);
             return ResponseEntity.status(HttpStatus.CREATED).body(newTask);
         } catch (Exception ex) {
             log.error("Error occurred while creating task with details: {}", taskDTO, ex);
@@ -55,7 +55,7 @@ public class TaskController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateTask(@PathVariable UUID id, @RequestBody TaskDTO taskDTO) {
         try {
-            Tasks updateTask = taskService.updateTask(id, taskDTO);
+            TasksEntity updateTask = taskService.updateTask(id, taskDTO);
             return ResponseEntity.ok(updateTask);
         } catch (Exception ex) {
             log.error("Error occurred while updating task for ID: {} with details: {}", id, taskDTO, ex);

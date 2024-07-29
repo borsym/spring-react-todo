@@ -1,7 +1,7 @@
 package com.todo.Todo_app.api.controller.priority;
 
 import com.todo.Todo_app.dto.PriorityDTO;
-import com.todo.Todo_app.model.Priorities;
+import com.todo.Todo_app.model.PrioritiesEntity;
 import com.todo.Todo_app.service.impl.PriorityServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,14 +22,14 @@ public class PriorityController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Priorities>> getAllPriorities() {
+    public ResponseEntity<List<PrioritiesEntity>> getAllPriorities() {
         return ResponseEntity.ok(priorityService.getAllPriority());
     }
 
     @PostMapping
     public ResponseEntity<?> createPriority(@RequestBody PriorityDTO priorityDTO) {
         try {
-            Priorities priorities = priorityService.createPriority(priorityDTO);
+            PrioritiesEntity priorities = priorityService.createPriority(priorityDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(priorities);
         } catch (Exception ex) {
             log.error("Error occurred while creating priority with details: {}", priorityDTO, ex);

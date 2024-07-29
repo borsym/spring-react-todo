@@ -1,7 +1,7 @@
 package com.todo.Todo_app.api.controller.role;
 
 import com.todo.Todo_app.dto.RolesDTO;
-import com.todo.Todo_app.model.Roles;
+import com.todo.Todo_app.model.RolesEntity;
 import com.todo.Todo_app.service.impl.RoleServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,14 +22,14 @@ public class RoleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Roles>> getAllRoles() {
+    public ResponseEntity<List<RolesEntity>> getAllRoles() {
         return ResponseEntity.ok(roleService.getAllRoles());
     }
 
     @PostMapping
     public ResponseEntity<?> createRole(@RequestBody RolesDTO rolesDTO) {
         try {
-            Roles roles = roleService.createRole(rolesDTO);
+            RolesEntity roles = roleService.createRole(rolesDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(roles);
         } catch (Exception ex) {
             log.error("Error occurred while creating role with details: {}", rolesDTO, ex);

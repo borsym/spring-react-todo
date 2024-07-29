@@ -1,6 +1,6 @@
 package com.todo.Todo_app.api.controller.user;
 
-import com.todo.Todo_app.model.Users;
+import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.service.impl.UserServiceImp;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,13 +23,13 @@ public class UserController {
     }
 
     @GetMapping
-    public List<Users> getAllUsers() {
+    public List<UsersEntity> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Users> getUserById(@PathVariable UUID id) {
-        Optional<Users> user = userService.getUserById(id);
+    public ResponseEntity<UsersEntity> getUserById(@PathVariable UUID id) {
+        Optional<UsersEntity> user = userService.getUserById(id);
         return user
                 .map(ResponseEntity::ok) // value present ResponseEntity.ok(user.get())
                 .orElseGet(() -> ResponseEntity.notFound().build()); // if not present notFound

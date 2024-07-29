@@ -3,7 +3,7 @@ package com.todo.Todo_app.service;
 import com.todo.Todo_app.dto.LoginDTO;
 import com.todo.Todo_app.dto.RegistrationDTO;
 import com.todo.Todo_app.exception.UserAlreadyExistsException;
-import com.todo.Todo_app.model.Users;
+import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.repository.UserRepository;
 import com.todo.Todo_app.service.impl.EncryptionServiceImp;
 import com.todo.Todo_app.service.impl.JWTServiceImp;
@@ -41,25 +41,25 @@ public class UserServiceTest {
 
     @Test
     public void UserService_RegisterUser_ReturnUsers() throws UserAlreadyExistsException {
-        Users user = Users.builder().username("test_user_a").email("test@gmail.com").password("secret").build();
+        UsersEntity user = UsersEntity.builder().username("test_user_a").email("test@gmail.com").password("secret").build();
 
         RegistrationDTO userRegistration = RegistrationDTO.builder().username("user_dot").email("dto@email.com").password("dto_secret").build();
         when(encryptionService.encryptPassword(userRegistration.getPassword())).thenReturn("encrypted_password");
-        when(userRepository.save(Mockito.any(Users.class))).thenReturn(user);
+        when(userRepository.save(Mockito.any(UsersEntity.class))).thenReturn(user);
         // TODO check if return type is good, should i change it instead to some DTO?
-        Users registeredUser = userService.registerUser(userRegistration);
+        UsersEntity registeredUser = userService.registerUser(userRegistration);
         Assertions.assertThat(registeredUser).isNotNull();
     }
 
     @Test
     public void UserService_GetAllUsers_ReturnUsers() {
-        Users user1 = Users.builder().username("test_user_a").email("test@gmail.com").password("secret").build();
-        Users user2 = Users.builder().username("test_user_b").email("test2@gmail.com").password("secret2").build();
-        List<Users> userList = Arrays.asList(user1, user2);
+        UsersEntity user1 = UsersEntity.builder().username("test_user_a").email("test@gmail.com").password("secret").build();
+        UsersEntity user2 = UsersEntity.builder().username("test_user_b").email("test2@gmail.com").password("secret2").build();
+        List<UsersEntity> userList = Arrays.asList(user1, user2);
 
         when(userRepository.findAll()).thenReturn(userList);
 
-        List<Users> result = userService.getAllUsers();
+        List<UsersEntity> result = userService.getAllUsers();
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.size()).isEqualTo(2);
@@ -69,7 +69,7 @@ public class UserServiceTest {
     @Test
     public void UserService_GetUserById_ReturnUser() {
         UUID userId = UUID.randomUUID();
-        Users user = Users.builder()
+        UsersEntity user = UsersEntity.builder()
                 .id(userId)
                 .username("test_user")
                 .email("test@gmail.com")
@@ -78,7 +78,7 @@ public class UserServiceTest {
 
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 
-        Optional<Users> result = userService.getUserById(userId);
+        Optional<UsersEntity> result = userService.getUserById(userId);
 
         Assertions.assertThat(result).isPresent();
         Assertions.assertThat(result.get()).isEqualTo(user);
@@ -90,7 +90,7 @@ public class UserServiceTest {
 
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
-        Optional<Users> result = userService.getUserById(userId);
+        Optional<UsersEntity> result = userService.getUserById(userId);
 
         Assertions.assertThat(result).isNotPresent();
     }
@@ -98,7 +98,7 @@ public class UserServiceTest {
 
     @Test
     public void UserService_LoginUser_ReturnsJwtToken() {
-        Users user = Users.builder()
+        UsersEntity user = UsersEntity.builder()
                 .username(username)
                 .password(encryptedPassword)
                 .build();
@@ -128,7 +128,7 @@ public class UserServiceTest {
 
     @Test
     public void UserService_LoginUser_ReturnsNull_WhenPasswordVerificationFails() {
-        Users user = Users.builder().username(username).password(encryptedPassword).build();
+        UsersEntity user = UsersEntity.builder().username(username).password(encryptedPassword).build();
         LoginDTO loginDTO = LoginDTO.builder().username(username).password(password).build();
 
         when(userRepository.findByUsername(username)).thenReturn(Optional.of(user));

@@ -2,8 +2,8 @@ package com.todo.Todo_app.service.impl;
 
 import com.todo.Todo_app.dto.ProjectDTO;
 import com.todo.Todo_app.exception.ProjectNotFoundException;
-import com.todo.Todo_app.model.Projects;
-import com.todo.Todo_app.model.Users;
+import com.todo.Todo_app.model.ProjectsEntity;
+import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.repository.ProjectRepository;
 import com.todo.Todo_app.service.ProjectService;
 import jakarta.transaction.Transactional;
@@ -21,12 +21,12 @@ public class ProjectServiceImp implements ProjectService {
         this.projectRepository = projectRepository;
     }
     @Override
-    public Projects createProject(ProjectDTO projectsDTO, Users user) {
+    public ProjectsEntity createProject(ProjectDTO projectsDTO, UsersEntity user) {
         var projectName = projectsDTO.getName();
         if (projectRepository.findByName(projectName).isPresent()) {
             throw new RuntimeException("Project already exists");
         }
-        Projects project = Projects.builder()
+        ProjectsEntity project = ProjectsEntity.builder()
                 .name(projectName)
                 .description(projectsDTO.getDescription())
                 .createdBy(user).build();
@@ -34,12 +34,12 @@ public class ProjectServiceImp implements ProjectService {
         return projectRepository.save(project);
     }
     @Override
-    public List<Projects> getAllProjects() {
+    public List<ProjectsEntity> getAllProjects() {
         return projectRepository.findAll();
     }
     @Override
     public void deleteProject(UUID id) throws ProjectNotFoundException {
-        Projects projects = projectRepository.findById(id)
+        ProjectsEntity projects = projectRepository.findById(id)
                 .orElseThrow(ProjectNotFoundException::new);
         projectRepository.delete(projects);
     }

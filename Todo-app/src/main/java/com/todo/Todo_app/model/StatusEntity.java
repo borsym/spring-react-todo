@@ -11,17 +11,13 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TeamMembers {
+@Table(name = "status")
+public class StatusEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, unique = true)
     private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name = "team_id")
-    private Teams team;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private Users user;
+    @Column(name = "status_name")
+    private String statusName;
 }

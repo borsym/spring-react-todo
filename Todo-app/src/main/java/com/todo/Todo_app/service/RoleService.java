@@ -2,13 +2,13 @@ package com.todo.Todo_app.service;
 
 import com.todo.Todo_app.dto.RolesDTO;
 import com.todo.Todo_app.exception.RoleNotFoundException;
-import com.todo.Todo_app.model.Roles;
+import com.todo.Todo_app.model.RolesEntity;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface RoleService {
-    Roles createRole(RolesDTO rolesDTO);
-    List<Roles> getAllRoles();
+    RolesEntity createRole(RolesDTO rolesDTO);
+    List<RolesEntity> getAllRoles();
     void deleteRole(UUID id) throws RoleNotFoundException;
 }

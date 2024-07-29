@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface UserRoleRepository extends JpaRepository<UserRoles, UUID> {
-    Optional<UserRoles> findByRoleAndUser(Roles role, Users user);
-    boolean existsByRoleAndUser(Roles role, Users user);
+public interface UserRoleRepository extends JpaRepository<UserRolesEntity, UUID> {
+    Optional<UserRolesEntity> findByRoleAndUser(RolesEntity role, UsersEntity user);
+    boolean existsByRoleAndUser(RolesEntity role, UsersEntity user);
 }

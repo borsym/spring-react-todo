@@ -1,8 +1,8 @@
 package com.todo.Todo_app.service.impl;
 
 import com.todo.Todo_app.dto.TeamDTO;
-import com.todo.Todo_app.model.Teams;
-import com.todo.Todo_app.model.Users;
+import com.todo.Todo_app.model.TeamsEntity;
+import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.repository.TeamRepository;
 import com.todo.Todo_app.service.TeamService;
 import jakarta.transaction.Transactional;
@@ -26,21 +26,21 @@ public class TeamServiceImp implements TeamService {
     }
 
     @Override
-    public List<Teams> getAllTeams() {
+    public List<TeamsEntity> getAllTeams() {
         return teamRepository.findAll();
     }
     @Override
-    public Optional<Teams> getTeamById(UUID id) {
+    public Optional<TeamsEntity> getTeamById(UUID id) {
         return teamRepository.findById(id);
     }
     @Override
-    public Teams createTeam(TeamDTO teamDTO, Users user) {
-        Teams team = Teams.builder().createdBy(user).name(teamDTO.getName()).createdAt(LocalDateTime.now()).updatedAt(LocalDateTime.now()).build();
+    public TeamsEntity createTeam(TeamDTO teamDTO, UsersEntity user) {
+        TeamsEntity team = TeamsEntity.builder().createdBy(user).name(teamDTO.getName()).createdAt(LocalDateTime.now()).updatedAt(LocalDateTime.now()).build();
         return teamRepository.save(team);
     }
     @Override
-    public Teams updateTeam(UUID id, TeamDTO teamDTO) {
-        Teams team = findOrThrow(teamRepository, id, "Teams");
+    public TeamsEntity updateTeam(UUID id, TeamDTO teamDTO) {
+        TeamsEntity team = findOrThrow(teamRepository, id, "Teams");
         if (teamDTO.getName() != null) {
             team.setName(teamDTO.getName());
         }
@@ -48,7 +48,7 @@ public class TeamServiceImp implements TeamService {
     }
     @Override
     public void deleteTeam(UUID id) {
-        Teams team = findOrThrow(teamRepository, id, "Teams");
+        TeamsEntity team = findOrThrow(teamRepository, id, "Teams");
         teamRepository.delete(team);
     }
 }

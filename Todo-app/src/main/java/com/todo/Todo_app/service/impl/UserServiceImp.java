@@ -3,7 +3,7 @@ package com.todo.Todo_app.service.impl;
 import com.todo.Todo_app.dto.LoginDTO;
 import com.todo.Todo_app.dto.RegistrationDTO;
 import com.todo.Todo_app.exception.UserAlreadyExistsException;
-import com.todo.Todo_app.model.Users;
+import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.repository.UserRepository;
 import com.todo.Todo_app.service.UserService;
 import jakarta.transaction.Transactional;
@@ -30,20 +30,20 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public Users registerUser(RegistrationDTO registrationBody) throws UserAlreadyExistsException {
+    public UsersEntity registerUser(RegistrationDTO registrationBody) throws UserAlreadyExistsException {
         if (userRepository.findByEmail(registrationBody.getEmail()).isPresent() || userRepository.findByUsername(registrationBody.getUsername()).isPresent()) {
             throw new UserAlreadyExistsException();
         }
-        Users user = Users.builder().email(registrationBody.getEmail()).username(registrationBody.getUsername()).password(encryptionService.encryptPassword(registrationBody.getPassword())).build();
+        UsersEntity user = UsersEntity.builder().email(registrationBody.getEmail()).username(registrationBody.getUsername()).password(encryptionService.encryptPassword(registrationBody.getPassword())).build();
 
         return userRepository.save(user);
     }
     @Override
     public String loginUser(LoginDTO loginBody) {
-        Optional<Users> optUser = userRepository.findByUsername(loginBody.getUsername());
+        Optional<UsersEntity> optUser = userRepository.findByUsername(loginBody.getUsername());
         if (optUser.isEmpty()) return null;
 
-        Users user = optUser.get();
+        UsersEntity user = optUser.get();
         if (encryptionService.verifyPassword(loginBody.getPassword(), user.getPassword())) {
             return jwtService.generateJWT(user);
         }
@@ -51,11 +51,11 @@ public class UserServiceImp implements UserService {
         return null;
     }
     @Override
-    public List<Users> getAllUsers() {
+    public List<UsersEntity> getAllUsers() {
         return userRepository.findAll();
     }
     @Override
-    public Optional<Users> getUserById(UUID id) {
+    public Optional<UsersEntity> getUserById(UUID id) {
         return userRepository.findById(id);
     }
 }

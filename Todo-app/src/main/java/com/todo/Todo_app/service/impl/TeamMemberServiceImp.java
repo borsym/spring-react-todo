@@ -1,9 +1,9 @@
 package com.todo.Todo_app.service.impl;
 
 import com.todo.Todo_app.exception.UserAlreadyMemberOfTeamException;
-import com.todo.Todo_app.model.TeamMembers;
-import com.todo.Todo_app.model.Teams;
-import com.todo.Todo_app.model.Users;
+import com.todo.Todo_app.model.TeamMembersEntity;
+import com.todo.Todo_app.model.TeamsEntity;
+import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.repository.TeamMemberRepository;
 import com.todo.Todo_app.repository.TeamRepository;
 import com.todo.Todo_app.repository.UserRepository;
@@ -31,29 +31,29 @@ public class TeamMemberServiceImp implements TeamMemberService {
     }
 
     @Override
-    public List<TeamMembers> getAllTeamMembers() {
+    public List<TeamMembersEntity> getAllTeamMembers() {
         return teamMembersRepository.findAll();
     }
 
     @Override
-    public TeamMembers addMemberToTeam(UUID teamId, UUID userId) throws UserAlreadyMemberOfTeamException {
-        Teams team = findOrThrow(teamRepository, teamId, "Teams");
-        Users user = findOrThrow(userRepository, userId, "Users");
+    public TeamMembersEntity addMemberToTeam(UUID teamId, UUID userId) throws UserAlreadyMemberOfTeamException {
+        TeamsEntity team = findOrThrow(teamRepository, teamId, "Teams");
+        UsersEntity user = findOrThrow(userRepository, userId, "Users");
 
         if (teamMembersRepository.existsByTeamAndUser(team, user)) {
             throw new UserAlreadyMemberOfTeamException();
         }
 
-        TeamMembers teamMember = TeamMembers.builder().team(team).user(user).build();
+        TeamMembersEntity teamMember = TeamMembersEntity.builder().team(team).user(user).build();
 
         return teamMembersRepository.save(teamMember);
     }
 
     @Override
     public void deleteTeamMember(UUID teamId, UUID userId) {
-        Teams team = findOrThrow(teamRepository, teamId, "Teams");
-        Users user = findOrThrow(userRepository, userId, "Users");
-        TeamMembers teamMember = teamMembersRepository.findByTeamAndUser(team, user).orElseThrow(() -> new RuntimeException("Team member not found"));
+        TeamsEntity team = findOrThrow(teamRepository, teamId, "Teams");
+        UsersEntity user = findOrThrow(userRepository, userId, "Users");
+        TeamMembersEntity teamMember = teamMembersRepository.findByTeamAndUser(team, user).orElseThrow(() -> new RuntimeException("Team member not found"));
         teamMembersRepository.delete(teamMember);
     }
 

@@ -1,6 +1,6 @@
 package com.todo.Todo_app.api.controller.user;
 
-import com.todo.Todo_app.model.UserRoles;
+import com.todo.Todo_app.model.UserRolesEntity;
 import com.todo.Todo_app.service.impl.UserRoleServiceImp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class UserRolesController {
     @GetMapping("/roles")
     public ResponseEntity<?> getAllUsersRoles() {
         try {
-            List<UserRoles> userRolesList = userRoleService.getAllUsersRoles();
+            List<UserRolesEntity> userRolesList = userRoleService.getAllUsersRoles();
             return ResponseEntity.ok(userRolesList);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
@@ -32,7 +32,7 @@ public class UserRolesController {
     @PostMapping("/{userId}/roles/{roleId}")
     public ResponseEntity<?> addRoleToUser(@PathVariable(value = "userId") UUID userId, @PathVariable(value = "roleId") UUID roleId) {
         try {
-            UserRoles userRole = userRoleService.addRoleToUser(userId, roleId);
+            UserRolesEntity userRole = userRoleService.addRoleToUser(userId, roleId);
             return ResponseEntity.ok(userRole);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());

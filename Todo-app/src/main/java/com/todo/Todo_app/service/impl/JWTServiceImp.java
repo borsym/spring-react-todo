@@ -3,7 +3,7 @@ package com.todo.Todo_app.service.impl;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.todo.Todo_app.model.Users;
+import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.service.JWTService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,7 +28,7 @@ public class JWTServiceImp implements JWTService {
     }
 
     @Override
-    public String generateJWT(Users user) {
+    public String generateJWT(UsersEntity user) {
         return JWT.create().withClaim(USERNAME_KEY, user.getUsername()).withExpiresAt(new Date(System.currentTimeMillis() + (1000L * expiryInSeconds))).withIssuer(issuer).sign(algorithm);
     }
 

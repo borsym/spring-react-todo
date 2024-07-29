@@ -1,8 +1,8 @@
 package com.todo.Todo_app.api.controller.team;
 
 import com.todo.Todo_app.dto.TeamDTO;
-import com.todo.Todo_app.model.Teams;
-import com.todo.Todo_app.model.Users;
+import com.todo.Todo_app.model.TeamsEntity;
+import com.todo.Todo_app.model.UsersEntity;
 import com.todo.Todo_app.service.impl.TeamServiceImp;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -24,14 +24,14 @@ public class TeamController {
     }
 
     @GetMapping
-    public List<Teams> getAllTeams() {
+    public List<TeamsEntity> getAllTeams() {
         return teamService.getAllTeams();
     }
 
     @PostMapping
-    public ResponseEntity<?> createTeam(@Valid @RequestBody TeamDTO teamDTO, @AuthenticationPrincipal Users user) {
+    public ResponseEntity<?> createTeam(@Valid @RequestBody TeamDTO teamDTO, @AuthenticationPrincipal UsersEntity user) {
         try {
-            Teams newTeam = teamService.createTeam(teamDTO, user);
+            TeamsEntity newTeam = teamService.createTeam(teamDTO, user);
             return ResponseEntity.status(HttpStatus.CREATED).body(newTeam);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while creating the team");
@@ -41,7 +41,7 @@ public class TeamController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateTeam(@PathVariable UUID id, @RequestBody TeamDTO teamDTO) {
         try {
-            Teams updateTeam = teamService.updateTeam(id, teamDTO);
+            TeamsEntity updateTeam = teamService.updateTeam(id, teamDTO);
             return ResponseEntity.ok(updateTeam);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating the team");

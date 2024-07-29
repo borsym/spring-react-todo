@@ -9,14 +9,15 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class Status {
+@NoArgsConstructor
+@Table(name = "roles")
+public class RolesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, unique = true)
     private UUID id;
+    @Column(name = "role_name", nullable = false)
+    private String roleName;
 
-    @Column(name = "status_name")
-    private String statusName;
 }
