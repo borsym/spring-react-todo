@@ -1,0 +1,16 @@
+<app-header></app-header>
+<main>
+  <ul>
+    <li>
+      <app-user
+        [id]="users[0].id"
+        [avatar]="users[0].avatag"
+        [name]="users[0].name"
+        (select)="onSelectUser($event)"
+      />
+    </li>
+    <!-- <li><app-user /></li>
+    <li><app-user /></li> -->
+  </ul>
+  <app-tasks [name]="selectedUser.name" />
+</main>
