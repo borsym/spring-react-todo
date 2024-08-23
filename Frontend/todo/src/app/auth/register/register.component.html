@@ -1,0 +1,52 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div>
+    <div>
+      <label for="username">Username</label>
+      <input id="username" formControlName="username" />
+    </div>
+    <div>
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" />
+    </div>
+  </div>
+
+  <div formGroupName="passwords">
+    <div>
+      <label for="password">Password</label>
+      <input id="password" type="password" formControlName="password" />
+    </div>
+    <div>
+      <label for="confirm-password">Confirm password</label>
+      <input
+        id="confirm-password"
+        type="password"
+        formControlName="confirmPassword"
+      />
+    </div>
+  </div>
+  <div>
+    <div>
+      <label for="role">Role</label>
+      <select id="role" formControlName="role">
+        <option value="Dev">Dev</option>
+        <option value="Lead">lead</option>
+      </select>
+    </div>
+  </div>
+  <fieldset formArrayName="team">
+    <legend>Which team do you belong to</legend>
+    <div>
+      <label for="first">first</label>
+      <input type="checkbox" id="first" value="first" />
+    </div>
+    <div>
+      <label for="second">second</label>
+      <input type="checkbox" id="second" value="second" />
+    </div>
+    <div>
+      <label for="third">third</label>
+      <input type="checkbox" id="third" value="third" />
+    </div>
+  </fieldset>
+  <button type="submit">Register</button>
+</form>
