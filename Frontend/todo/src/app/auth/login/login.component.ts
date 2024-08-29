@@ -6,7 +6,9 @@ import {
   Validators,
   AbstractControl,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { debounceTime, of } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 function mustContainQuestionMark(control: AbstractControl) {
   if (control.value.includes('?')) {
@@ -39,7 +41,11 @@ if (savedForm) {
   styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
-  private destroyRef = inject(DestroyRef);
+  constructor(
+    private authService: AuthService,
+    private destroyRef: DestroyRef,
+    private router: Router
+  ) {}
 
   form = new FormGroup({
     username: new FormControl(initialUsername, {
@@ -85,10 +91,10 @@ export class LoginComponent implements OnInit {
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
   onSubmit() {
-    console.log('hello  ');
-    console.log(this.form);
     const username = this.form.value.username;
     const pass = this.form.value.password;
     console.log(username, pass);
+    this.authService.login();
+    this.router.navigate(['/tasks']);
   }
 }
