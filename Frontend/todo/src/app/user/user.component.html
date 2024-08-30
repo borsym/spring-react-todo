@@ -1,0 +1,8 @@
+<ul>
+  @for(user of users; track user.id) {
+  <li>
+    <a [routerLink]="['/users', user.id]">{{ user.name }}</a>
+  </li>
+  }
+</ul>
+<router-outlet />

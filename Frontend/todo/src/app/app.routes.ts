@@ -6,6 +6,11 @@ import { TaskComponent } from './task/task.component';
 import { inject } from '@angular/core';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
+import { UserComponent } from './user/user.component';
+import {
+  resolveUserName,
+  UserDetailsComponent,
+} from './user/user-details/user-details.component';
 
 export const routes: Routes = [
   {
@@ -29,5 +34,16 @@ export const routes: Routes = [
   {
     path: 'teams',
     component: TeamComponent,
+  },
+  {
+    path: 'users',
+    component: UserComponent,
+    children: [
+      {
+        path: ':userId',
+        component: UserDetailsComponent,
+        resolve: { user: resolveUserName },
+      },
+    ],
   },
 ];
